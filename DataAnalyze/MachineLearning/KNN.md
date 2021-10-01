@@ -53,3 +53,6 @@ $$
 newValue = \frac{oldValue-μ}{σ}
 $$
 ​		其中μ是均值，σ是标准差
+
+
+

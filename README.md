@@ -1,7 +1,26 @@
+
 # StudyNotes
-åœ¨å­¦ä¹ ä¸å·¥ä½œä¸­ç”¨åˆ°çš„çŸ¥è¯†çš„æ€»ç»“ï¼Œå’Œåœ¨ç½‘ä¸Šæœè¿‡çš„ä½¿ç”¨æ–¹æ³•
+ÔÚÑ§Ï°Óë¹¤×÷ÖĞÓÃµ½µÄÖªÊ¶µÄ×Ü½á£¬ºÍÔÚÍøÉÏËÑ¹ıµÄÊ¹ÓÃ·½·¨
+Ä¿Â¼:
+
+## ./
 
 
+- [init_catalog](./init_catalog.py)  
 
-ç›®å½•ï¼š
+- [README](./README.md)  
 
+### DataAnalyze
+#### Analyze
+#### DataBase
+#### MachineLearning
+- [KNN](./DataAnalyze/MachineLearning/KNN.md)  
+
+- [note](./DataAnalyze/MachineLearning/note.md)  
+
+- [¾ö²ßÊ÷](./DataAnalyze/MachineLearning/¾ö²ßÊ÷.md)  
+
+- [¸ÅÄîÓë½âÊÍ](./DataAnalyze/MachineLearning/¸ÅÄîÓë½âÊÍ.md)  
+
+### Git
+- [note](./Git/note.md)  
