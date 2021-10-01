@@ -6,21 +6,21 @@
 ## ./
 
 
-- init_catalog.py  
+- [init_catalog](./init_catalog.py)  
 
-- README.md  
+- [README](./README.md)  
 
 ### DataAnalyze
 #### Analyze
 #### DataBase
 #### MachineLearning
-- KNN.md  
+- [KNN](./DataAnalyze/MachineLearning/KNN.md)  
 
-- note.md  
+- [note](./DataAnalyze/MachineLearning/note.md)  
 
-- 决策树.md  
+- [决策树](./DataAnalyze/MachineLearning/决策树.md)  
 
-- 概念与解释.md  
+- [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md)  
 
 ### Git
-- note.md  
+- [note](./Git/note.md)  

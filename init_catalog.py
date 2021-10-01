@@ -32,7 +32,12 @@ def recursion_init_path(path, hight, file_text):
             continue
         if '.' in cur_path:
             # 文件
-            file_text = file_text + '\n' + '-' + ' ' + cur_path + '  \n'
+            if '/' == path[-1]:
+                sub_path = cur_path
+            else :
+                sub_path = '/' + cur_path
+            cur_link = f'[{cur_path.split(".")[0]}]({path + sub_path})'
+            file_text = file_text + '\n' + '-' + ' ' + cur_link + '  \n'
         else :
             # 子文件夹
             if '/' == path[-1]:
