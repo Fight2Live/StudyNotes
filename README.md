@@ -16,11 +16,12 @@
 #### MachineLearning
 - [KNN](./DataAnalyze/MachineLearning/KNN.md)  
 
-- [note](./DataAnalyze/MachineLearning/note.md)  
-
 - [决策树](./DataAnalyze/MachineLearning/决策树.md)  
 
 - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md)  
 
 ### Git
 - [note](./Git/note.md)  
+
+### PythonPackage
+- [pandas](./PythonPackage/pandas.md)  
