@@ -13,6 +13,9 @@
 
 - [README](./README.md)  
 
+### Algorithm
+- [算法简记](./Algorithm/算法简记.md)  
+
 ### DataAnalyze
 #### Analyze
 - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md)  
