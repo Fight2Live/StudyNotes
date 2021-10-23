@@ -33,7 +33,7 @@ f"""
 规划中:{len(wait_start)}  \n
 
 # 目录:  \n
-## ./  \n
+
 """
 
 
@@ -74,7 +74,7 @@ def recursion_init_path(path, hight, file_text):
             file_name = cur_path.split(".")[0]
             cur_link = f'[{file_name}]({path + sub_path})'
             label = get_label(file_name)
-            file_text = file_text + '\n' + '-' + ' ' + cur_link + ' '+ label + '  \n'
+            file_text = file_text  + '  \n' + '  ' * hight + '- ' + cur_link + ' '+ label + '  \n'
         else :
             # 子文件夹
             if '/' == path[-1]:
@@ -83,7 +83,7 @@ def recursion_init_path(path, hight, file_text):
                 sub_path = path + '/' + cur_path
 
             cur_sub_dir_list.append(sub_path)
-            cur_str = '\n' + '#' * hight + ' ' + cur_path
+            cur_str = '\n' + '  ' * hight + '- ' + cur_path
             cur_sub_dir_text_map[sub_path] = cur_str
 
 
@@ -94,7 +94,7 @@ def recursion_init_path(path, hight, file_text):
 
     return file_text
 
-readme_text = recursion_init_path(root_path, 3, '')
+readme_text = recursion_init_path(root_path, 0, '')
 print(readme_text)
 readme = readme_head + readme_text
 
