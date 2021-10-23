@@ -22,67 +22,66 @@
 
 # 目录:  
 
-## ./  
 
-
+  
 - [init_catalog](./init_catalog.py)   
-
+  
 - [README](./README.md)   
 
-### Algorithm
-- [算法简记](./Algorithm/算法简记.md) （…… 完善中）  
+- Algorithm  
+  - [算法简记](./Algorithm/算法简记.md) （…… 完善中）  
+  
+  - [题目本](./Algorithm/题目本.md) （…… 完善中）  
 
-- [题目本](./Algorithm/题目本.md) （…… 完善中）  
+- BigData  
+  - [Hadoop](./BigData/Hadoop.md) （× 规划中）  
+  
+  - [Hive](./BigData/Hive.md) （× 规划中）  
+  
+  - [Spark](./BigData/Spark.md) （× 规划中）  
 
-### BigData
-- [Hadoop](./BigData/Hadoop.md) （× 规划中）  
+- DataAnalyze
+  - Analyze  
+    - [PowerBI](./DataAnalyze/Analyze/PowerBI.md) （！ 待完善）  
+  
+    - [分析模型](./DataAnalyze/Analyze/分析模型.md) （！ 待完善）  
+  
+    - [常用指标](./DataAnalyze/Analyze/常用指标.md) （！ 待完善）  
+  
+    - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md) （…… 完善中）  
 
-- [Hive](./BigData/Hive.md) （× 规划中）  
+  - DataBase  
+    - [ETL](./DataAnalyze/DataBase/ETL.md) （× 规划中）  
+  
+    - [MySQL](./DataAnalyze/DataBase/MySQL.md) （！ 待完善）  
+  
+    - [noSQL](./DataAnalyze/DataBase/noSQL.md) （× 规划中）  
 
-- [Spark](./BigData/Spark.md) （× 规划中）  
+  - MachineLearning  
+    - [Apriori](./DataAnalyze/MachineLearning/Apriori.md) （！ 待完善）  
+  
+    - [GBDT](./DataAnalyze/MachineLearning/GBDT.md) （× 规划中）  
+  
+    - [KNN](./DataAnalyze/MachineLearning/KNN.md) （…… 完善中）  
+  
+    - [决策树](./DataAnalyze/MachineLearning/决策树.md) （…… 完善中）  
+  
+    - [回归树](./DataAnalyze/MachineLearning/回归树.md) （× 规划中）  
+  
+    - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
+  
+    - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （× 规划中）  
+  
+    - [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （！ 待完善）  
 
-### DataAnalyze
-#### Analyze
-- [PowerBI](./DataAnalyze/Analyze/PowerBI.md) （！ 待完善）  
+- Git  
+  - [note](./Git/note.md)   
 
-- [分析模型](./DataAnalyze/Analyze/分析模型.md) （！ 待完善）  
-
-- [常用指标](./DataAnalyze/Analyze/常用指标.md) （！ 待完善）  
-
-- [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md) （…… 完善中）  
-
-#### DataBase
-- [ETL](./DataAnalyze/DataBase/ETL.md) （× 规划中）  
-
-- [MySQL](./DataAnalyze/DataBase/MySQL.md) （！ 待完善）  
-
-- [noSQL](./DataAnalyze/DataBase/noSQL.md) （× 规划中）  
-
-#### MachineLearning
-- [Apriori](./DataAnalyze/MachineLearning/Apriori.md) （！ 待完善）  
-
-- [GBDT](./DataAnalyze/MachineLearning/GBDT.md) （× 规划中）  
-
-- [KNN](./DataAnalyze/MachineLearning/KNN.md) （…… 完善中）  
-
-- [决策树](./DataAnalyze/MachineLearning/决策树.md) （…… 完善中）  
-
-- [回归树](./DataAnalyze/MachineLearning/回归树.md) （× 规划中）  
-
-- [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
-
-- [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （× 规划中）  
-
-- [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （！ 待完善）  
-
-### Git
-- [note](./Git/note.md)   
-
-### PythonPackage
-- [numpy](./PythonPackage/numpy.md) （！ 待完善）  
-
-- [pandas](./PythonPackage/pandas.md) （…… 完善中）  
-
-- [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
-
-- [TensorFlow](./PythonPackage/TensorFlow.md) （× 规划中）  
+- PythonPackage  
+  - [numpy](./PythonPackage/numpy.md) （！ 待完善）  
+  
+  - [pandas](./PythonPackage/pandas.md) （…… 完善中）  
+  
+  - [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
+  
+  - [TensorFlow](./PythonPackage/TensorFlow.md) （× 规划中）  
