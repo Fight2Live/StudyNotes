@@ -13,9 +13,9 @@
 
 **统计：**  
 
-完善中:7  
+完善中:10  
 
-待完善:7  
+待完善:5  
 
 规划中:10  
 
@@ -42,13 +42,17 @@
 
 - DataAnalyze
   - Analyze  
-    - [PowerBI](./DataAnalyze/Analyze/PowerBI.md) （！ 待完善）  
+    - [PowerBI](./DataAnalyze/Analyze/PowerBI.md) （…… 完善中）  
   
-    - [分析模型](./DataAnalyze/Analyze/分析模型.md) （！ 待完善）  
+    - [分析模型](./DataAnalyze/Analyze/分析模型.md) （…… 完善中）  
   
     - [常用指标](./DataAnalyze/Analyze/常用指标.md) （！ 待完善）  
   
+    - [报表细节](./DataAnalyze/Analyze/报表细节.md)   
+  
     - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md) （…… 完善中）  
+  
+    - [数据预处理](./DataAnalyze/Analyze/数据预处理.md)   
 
   - DataBase  
     - [ETL](./DataAnalyze/DataBase/ETL.md) （× 规划中）  
@@ -69,6 +73,8 @@
     - [回归树](./DataAnalyze/MachineLearning/回归树.md) （× 规划中）  
   
     - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
+  
+    - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md) （…… 完善中）  
   
     - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （× 规划中）  
   
