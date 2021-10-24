@@ -6,11 +6,12 @@ import os
 
 # 完善中
 wirtint = ['算法简记', '题目本', '描述性统计分析', 'KNN',
-           '决策树', '概念与解释', 'pandas',  ]
+           '决策树', '概念与解释', 'pandas', '贝叶斯概率',
+           'PowerBI', '分析模型', ]
 
 # 待完善
-wait_wirte = ['PowerBI', '分析模型', '常用指标', 'MySQL',
-              'Apriori', '随机森林', 'numpy',  ]
+wait_wirte = ['常用指标', 'MySQL', 'Apriori', '随机森林',
+              'numpy',  ]
 
 # 规划中
 # 一想到这个列表会不断变长就头疼
