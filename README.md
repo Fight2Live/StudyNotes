@@ -13,11 +13,11 @@
 
 **统计：**  
 
-完善中:10  
+完善中:12  
 
 待完善:5  
 
-规划中:10  
+规划中:9  
 
 
 # 目录:  
@@ -61,6 +61,14 @@
   
     - [noSQL](./DataAnalyze/DataBase/noSQL.md) （× 规划中）  
 
+  - DeepLearning  
+    - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md) （…… 完善中）  
+
+  - FormulasImg  
+    - [9Q9UH7LUWN_1_WRCU]$]O{V-16352549320081](./DataAnalyze/FormulasImg/9Q9UH7LUWN_1_WRCU]$]O{V-16352549320081.hc)   
+  
+    - [9Q9UH7LUWN_1_WRCU]$]O{V](./DataAnalyze/FormulasImg/9Q9UH7LUWN_1_WRCU]$]O{V.hc)   
+
   - MachineLearning  
     - [Apriori](./DataAnalyze/MachineLearning/Apriori.md) （！ 待完善）  
   
@@ -84,10 +92,12 @@
   - [note](./Git/note.md)   
 
 - PythonPackage  
+  - [matplotlib](./PythonPackage/matplotlib.md) （…… 完善中）  
+  
   - [numpy](./PythonPackage/numpy.md) （！ 待完善）  
   
   - [pandas](./PythonPackage/pandas.md) （…… 完善中）  
   
-  - [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
+  - [PyTorch](./PythonPackage/PyTorch.md) （…… 完善中）  
   
-  - [TensorFlow](./PythonPackage/TensorFlow.md) （× 规划中）  
+  - [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
