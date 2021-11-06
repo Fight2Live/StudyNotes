@@ -13,11 +13,11 @@
 
 **统计：**  
 
-完善中:12  
+完善中:13  
 
-待完善:5  
+待完善:6  
 
-规划中:9  
+规划中:7  
 
 
 # 目录:  
@@ -64,11 +64,6 @@
   - DeepLearning  
     - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md) （…… 完善中）  
 
-  - FormulasImg  
-    - [9Q9UH7LUWN_1_WRCU]$]O{V-16352549320081](./DataAnalyze/FormulasImg/9Q9UH7LUWN_1_WRCU]$]O{V-16352549320081.hc)   
-  
-    - [9Q9UH7LUWN_1_WRCU]$]O{V](./DataAnalyze/FormulasImg/9Q9UH7LUWN_1_WRCU]$]O{V.hc)   
-
   - MachineLearning  
     - [Apriori](./DataAnalyze/MachineLearning/Apriori.md) （！ 待完善）  
   
@@ -78,15 +73,15 @@
   
     - [决策树](./DataAnalyze/MachineLearning/决策树.md) （…… 完善中）  
   
-    - [回归树](./DataAnalyze/MachineLearning/回归树.md) （× 规划中）  
+    - [回归树](./DataAnalyze/MachineLearning/回归树.md) （！ 待完善）  
   
     - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
   
     - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md) （…… 完善中）  
   
-    - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （× 规划中）  
+    - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （！ 待完善）  
   
-    - [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （！ 待完善）  
+    - [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （…… 完善中）  
 
 - Git  
   - [note](./Git/note.md)   
