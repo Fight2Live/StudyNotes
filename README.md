@@ -77,6 +77,10 @@
   
     - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
   
+    - [模型优化_转载_CSDN_正行天下](./DataAnalyze/MachineLearning/模型优化_转载_CSDN_正行天下.md)   
+  
+    - [模型评估](./DataAnalyze/MachineLearning/模型评估.md)   
+  
     - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md) （…… 完善中）  
   
     - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （！ 待完善）  
@@ -88,6 +92,8 @@
 
 - PythonPackage  
   - [matplotlib](./PythonPackage/matplotlib.md) （…… 完善中）  
+  
+  - [mlxtend](./PythonPackage/mlxtend.md)   
   
   - [numpy](./PythonPackage/numpy.md) （！ 待完善）  
   
