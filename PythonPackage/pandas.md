@@ -125,7 +125,52 @@ df5 = pd.DataFrame.from_dict(dict1)
 
 
 
+### 
+
+
+
+### 
+
+
+
+
+
+
+
 ### 选择与切片
+
+#### .iloc
+
+基于整数的下标来进行数据定位/选择
+
+```python
+df.iloc[row, column]
+
+df.iloc[100]		#  series，第100行的数据
+df.iloc[[100]]		#  dataframe，第100行的数据
+df.iloc[2:10]		#  dataframe，第2行至第9行的数据，[2, 10)
+df.iloc[2:10, 1]	#  series，第二行至第九行中，第一列的值
+df.iloc[2:10, 1:3]	#  dataframe，第2行至第9行[2, 10)的中，第一列到第二列的值[1, 3)
+df.iloc[2:10,[1]]	#  dataframe，第二行至第九行中，第一列的值
+```
+
+
+
+
+
+#### .loc
+
+1. 基于标签名进行查找
+
+2. 使用布尔值，或条件语句来进行查找
+
+3. 基于行或列的整数下标进行差找（与iloc一致）
+
+   
+
+
+
+
 
 ##### **.iloc和.loc的区别：**
 
@@ -250,6 +295,8 @@ pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
 
 
 
+
+## 数据库相关
 
 
 

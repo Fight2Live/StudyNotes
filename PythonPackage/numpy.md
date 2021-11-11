@@ -6,7 +6,14 @@
 
 ## 创建np对象
 
-### np.genfromtxt(fpath, delimiter, dtype)
+```python
+# 读取文本，CSV文件
+np.genfromtxt(fpath, delimiter, dtype)
+
+np.loadtxt(fpath, delimiter ,dtype)
+```
+
+
 
 
 
@@ -20,28 +27,22 @@
 
 
 
+```python
 np.append
-
-
-
 
 
 np.concatenate
 
 
-
-
-
 np.stack
-
-
-
 
 
 np.vstack
 
 
-
-
-
 np.hstack
+
+```
+
+
+

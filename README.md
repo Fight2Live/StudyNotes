@@ -13,11 +13,11 @@
 
 **统计：**  
 
-完善中:13  
+完善中:15  
 
 待完善:6  
 
-规划中:7  
+规划中:13  
 
 
 # 目录:  
@@ -53,6 +53,8 @@
     - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md) （…… 完善中）  
   
     - [数据预处理](./DataAnalyze/Analyze/数据预处理.md)   
+  
+    - [特征工程](./DataAnalyze/Analyze/特征工程.md) （× 规划中）  
 
   - DataBase  
     - [ETL](./DataAnalyze/DataBase/ETL.md) （× 规划中）  
@@ -69,6 +71,8 @@
   
     - [GBDT](./DataAnalyze/MachineLearning/GBDT.md) （× 规划中）  
   
+    - [HMM](./DataAnalyze/MachineLearning/HMM.md)   
+  
     - [KNN](./DataAnalyze/MachineLearning/KNN.md) （…… 完善中）  
   
     - [决策树](./DataAnalyze/MachineLearning/决策树.md) （…… 完善中）  
@@ -79,16 +83,13 @@
   
     - [模型优化_转载_CSDN_正行天下](./DataAnalyze/MachineLearning/模型优化_转载_CSDN_正行天下.md)   
   
-    - [模型评估](./DataAnalyze/MachineLearning/模型评估.md)   
+    - [模型评估](./DataAnalyze/MachineLearning/模型评估.md) （…… 完善中）  
   
     - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md) （…… 完善中）  
   
     - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （！ 待完善）  
   
     - [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （…… 完善中）  
-
-- Git  
-  - [note](./Git/note.md)   
 
 - PythonPackage  
   - [matplotlib](./PythonPackage/matplotlib.md) （…… 完善中）  
@@ -102,3 +103,8 @@
   - [PyTorch](./PythonPackage/PyTorch.md) （…… 完善中）  
   
   - [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
+
+- Util  
+  - [anaconda_note](./Util/anaconda_note.md)   
+  
+  - [git_note](./Util/git_note.md)   
