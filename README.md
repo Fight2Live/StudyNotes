@@ -11,13 +11,6 @@
 3、同时把以后需要学的知识先建一个文件，提醒自己需要学习与补充  
   
 
-**统计：**  
-
-完善中:15  
-
-待完善:6  
-
-规划中:13  
 
 
 # 目录:  
@@ -29,80 +22,82 @@
 - [README](./README.md)   
 
 - Algorithm  
-  - [算法简记](./Algorithm/算法简记.md) （…… 完善中）  
+  - [算法简记](./Algorithm/算法简记.md)   
   
-  - [题目本](./Algorithm/题目本.md) （…… 完善中）  
+  - [题目本](./Algorithm/题目本.md)   
 
 - BigData  
-  - [Hadoop](./BigData/Hadoop.md) （× 规划中）  
+  - [Hadoop](./BigData/Hadoop.md)   
   
-  - [Hive](./BigData/Hive.md) （× 规划中）  
+  - [Hive](./BigData/Hive.md)   
   
-  - [Spark](./BigData/Spark.md) （× 规划中）  
+  - [Spark](./BigData/Spark.md)   
 
 - DataAnalyze
   - Analyze  
-    - [PowerBI](./DataAnalyze/Analyze/PowerBI.md) （…… 完善中）  
+    - [PowerBI](./DataAnalyze/Analyze/PowerBI.md)   
   
-    - [分析模型](./DataAnalyze/Analyze/分析模型.md) （…… 完善中）  
+    - [分析模型](./DataAnalyze/Analyze/分析模型.md)   
   
-    - [常用指标](./DataAnalyze/Analyze/常用指标.md) （！ 待完善）  
+    - [常用指标](./DataAnalyze/Analyze/常用指标.md)   
   
     - [报表细节](./DataAnalyze/Analyze/报表细节.md)   
   
-    - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md) （…… 完善中）  
+    - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md)   
   
     - [数据预处理](./DataAnalyze/Analyze/数据预处理.md)   
   
-    - [特征工程](./DataAnalyze/Analyze/特征工程.md) （× 规划中）  
+    - [特征工程](./DataAnalyze/Analyze/特征工程.md)   
 
   - DataBase  
-    - [ETL](./DataAnalyze/DataBase/ETL.md) （× 规划中）  
+    - [ETL](./DataAnalyze/DataBase/ETL.md)   
   
-    - [MySQL](./DataAnalyze/DataBase/MySQL.md) （！ 待完善）  
+    - [MySQL](./DataAnalyze/DataBase/MySQL.md)   
   
-    - [noSQL](./DataAnalyze/DataBase/noSQL.md) （× 规划中）  
+    - [noSQL](./DataAnalyze/DataBase/noSQL.md)   
 
   - DeepLearning  
-    - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md) （…… 完善中）  
+    - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md)   
 
   - MachineLearning  
-    - [Apriori](./DataAnalyze/MachineLearning/Apriori.md) （！ 待完善）  
+    - [Apriori](./DataAnalyze/MachineLearning/Apriori.md)   
   
-    - [GBDT](./DataAnalyze/MachineLearning/GBDT.md) （× 规划中）  
+    - [GBDT](./DataAnalyze/MachineLearning/GBDT.md)   
   
     - [HMM](./DataAnalyze/MachineLearning/HMM.md)   
   
-    - [KNN](./DataAnalyze/MachineLearning/KNN.md) （…… 完善中）  
+    - [KNN](./DataAnalyze/MachineLearning/KNN.md)   
   
-    - [决策树](./DataAnalyze/MachineLearning/决策树.md) （…… 完善中）  
+    - [决策树](./DataAnalyze/MachineLearning/决策树.md)   
   
-    - [回归树](./DataAnalyze/MachineLearning/回归树.md) （！ 待完善）  
+    - [回归树](./DataAnalyze/MachineLearning/回归树.md)   
   
-    - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md) （…… 完善中）  
+    - [概念与解释](./DataAnalyze/MachineLearning/概念与解释.md)   
   
     - [模型优化_转载_CSDN_正行天下](./DataAnalyze/MachineLearning/模型优化_转载_CSDN_正行天下.md)   
   
-    - [模型评估](./DataAnalyze/MachineLearning/模型评估.md) （…… 完善中）  
+    - [模型评估](./DataAnalyze/MachineLearning/模型评估.md)   
   
-    - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md) （…… 完善中）  
+    - [贝叶斯概率](./DataAnalyze/MachineLearning/贝叶斯概率.md)   
   
-    - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md) （！ 待完善）  
+    - [逻辑回归](./DataAnalyze/MachineLearning/逻辑回归.md)   
   
-    - [随机森林](./DataAnalyze/MachineLearning/随机森林.md) （…… 完善中）  
+    - [随机森林](./DataAnalyze/MachineLearning/随机森林.md)   
 
 - PythonPackage  
-  - [matplotlib](./PythonPackage/matplotlib.md) （…… 完善中）  
+  - [matplotlib](./PythonPackage/matplotlib.md)   
   
   - [mlxtend](./PythonPackage/mlxtend.md)   
   
-  - [numpy](./PythonPackage/numpy.md) （！ 待完善）  
+  - [numpy](./PythonPackage/numpy.md)   
   
-  - [pandas](./PythonPackage/pandas.md) （…… 完善中）  
+  - [pandas](./PythonPackage/pandas.md)   
   
-  - [PyTorch](./PythonPackage/PyTorch.md) （…… 完善中）  
+  - [PyTorch](./PythonPackage/PyTorch.md)   
   
-  - [Scikit-Learn](./PythonPackage/Scikit-Learn.md) （× 规划中）  
+  - [Scikit-Learn](./PythonPackage/Scikit-Learn.md)   
+  
+  - [Selenium](./PythonPackage/Selenium.md)   
 
 - Util  
   - [anaconda_note](./Util/anaconda_note.md)   

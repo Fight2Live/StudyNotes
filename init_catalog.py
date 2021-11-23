@@ -30,17 +30,19 @@ f"""
 1、想以后如果忘了哪部分的知识或点，就把笔记翻出来看，不用去翻书  \n
 2、想让不懂这块知识的人，看了之后起码会有一个概念  \n
 3、同时把以后需要学的知识先建一个文件，提醒自己需要学习与补充  \n  \n
-**统计：**  \n
-完善中:{len(wirtint)}  \n
-待完善:{len(wait_wirte)}  \n
-规划中:{len(wait_start)}  \n
+
 
 # 目录:  \n
 
 """
 
+# **统计：**  \n
+# 完善中:{len(wirtint)}  \n
+# 待完善:{len(wait_wirte)}  \n
+# 规划中:{len(wait_start)}  \n
 
 def get_label(file_name):
+    return ''
     if file_name in wirtint:
         return '（…… 完善中）'
     elif file_name in wait_wirte:
