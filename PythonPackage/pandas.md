@@ -133,6 +133,8 @@ df5 = pd.DataFrame.from_dict(dict1)
 
 
 
+### 判空
+
 
 
 
@@ -222,6 +224,12 @@ df[ df[column]==x ]可以取得column列为x的所有行
 
 
 
+### 筛选
+
+```PYTHON
+df = df[(df['column_name1' <!=> 条件1] & df['column_name2' <!=> 条件2])]  # df = dataFrame
+```
+
 
 
 
@@ -297,6 +305,18 @@ pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
 
 
 ## 数据库相关
+
+### 保存
+
+```python
+df.to_sql(table_name, con, schema, if_exists, index)
+
+# 其中con接受sqlalchemy.engine.connect
+from sqlalchemy import create_engine
+engine_connect = create_engine('mysql+pymysql://{帐户}:{密码}@{主机地址}:{端口号}/{数据库名}').connect()
+
+
+```
 
 
 

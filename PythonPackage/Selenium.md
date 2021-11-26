@@ -5,10 +5,10 @@ Selenium是一个针对Web应用的自动化框架，它能够让使用者编写
 ## 一、简单的例子
 
 ​    实例化一个WebDriver对象，并指明浏览器驱动
-​    wd = webdriver.Chrome('浏览器驱动路径')
-​    
+​   
 
 ```python
+wd = webdriver.Chrome('浏览器驱动路径')
 # 使用.get（）可以打开指定网站
 wd.get(url)
 
@@ -67,6 +67,16 @@ XPath能更好的选取目标元素
 ```python
 #find_element_by_xpath('xpath路径')
 ```
+
+
+
+#### 4.定位
+
+```python
+WebDriver.presence_of_element_located((type, type_value))
+```
+
+
 
 ## 三、各类操作     
 
@@ -148,3 +158,23 @@ WebDriver.switch_to.frame(frame_reference)
 ### 6.调用JavaScript
 
 ​    WebDriver.execute_script(js语句)
+
+
+
+
+
+## 三、等待
+
+### 1.显式等待 WebDriverWait()
+
+```python
+WebDriverWait(driver, timeout)
+# driver 目标浏览器驱动
+# timeout 最长超时时间
+
+# 通常与until(), until_not()等一起使用
+WebDriverWait(driver, timeout).until(method, message='')
+# 表示每timeout秒执行一次method，如果成立，则结束等待进入下一步操作
+
+```
+
