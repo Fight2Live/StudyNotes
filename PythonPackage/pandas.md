@@ -315,10 +315,11 @@ df.to_sql(table_name, con, schema, if_exists, index)
 from sqlalchemy import create_engine
 engine_connect = create_engine('mysql+pymysql://{帐户}:{密码}@{主机地址}:{端口号}/{数据库名}').connect()
 
-
 ```
 
-
+> to_sql保存时，需要df与表中的列一一对应，若表不存在，会自动建表，并且每一个字段类型都是text
+>
+> 如果列不一一对应，会保存失败，这个限制很麻烦，常常自定义sql去执行
 
 
 
