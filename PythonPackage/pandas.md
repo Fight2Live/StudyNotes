@@ -121,21 +121,24 @@ df5 = pd.DataFrame.from_dict(dict1)
 
 
 
-
-
-
-
-### 
-
-
-
-### 
-
-
-
 ### 判空
 
 
+
+
+
+
+
+### 计数
+
+```PYTHON
+# 得到非空数据的计数
+data.count()
+data['字段名'].count()
+
+# 该列名下各个值的计数
+data[字段名].value_counts()
+```
 
 
 
@@ -234,6 +237,22 @@ df = df[(df['column_name1' <!=> 条件1] & df['column_name2' <!=> 条件2])]  # 
 
 
 
+### 新加列
+
+```PYTHON
+#1.apply
+def get_hour(s:pd.Series):
+    return int(((s['date'].split(' '))[-2].split(':'))[0])
+
+df1.loc[:, 新列名] = df1.apply(get_hour, axis=1)
+```
+
+
+
+
+
+
+
 ### 合并
 
 #### concat
@@ -302,6 +321,14 @@ pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
 
 
 
+### 聚合
+
+```PYTHON
+df_groupby = df.groupby("字段名")
+```
+
+
+
 
 
 ## 数据库相关
@@ -320,6 +347,18 @@ engine_connect = create_engine('mysql+pymysql://{帐户}:{密码}@{主机地址}
 > to_sql保存时，需要df与表中的列一一对应，若表不存在，会自动建表，并且每一个字段类型都是text
 >
 > 如果列不一一对应，会保存失败，这个限制很麻烦，常常自定义sql去执行
+
+
+
+### 读取
+
+```PY
+data = pd.read_sql(sql ,con)
+```
+
+
+
+
 
 
 
