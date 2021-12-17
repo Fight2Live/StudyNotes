@@ -125,11 +125,20 @@ df5 = pd.DataFrame.from_dict(dict1)
 
 
 
+```python
+# 可以将空值填充为特定数值，然后根据index进行删除
+df['column'] = df['column'].fillna('99999')
+index_list = df[(df['column']=='99999')].index.tolist()
+df = df.drop(index_list)
+```
 
 
 
 
-### 计数
+
+
+
+### 统计
 
 ```PYTHON
 # 得到非空数据的计数
@@ -138,6 +147,20 @@ data['字段名'].count()
 
 # 该列名下各个值的计数
 data[字段名].value_counts()
+
+# 对连续型数据的统计指标
+data.describe()
+
+.max()	最大值
+.min()	最小值
+.ptp()	极差
+.mean()	平均值
+.var()	方差
+.std()	标准差
+.mode()	众数        （返回一个dataframe格式的数据）
+.count()	非空数目
+.median()	中位数
+.cov()	协方差
 ```
 
 

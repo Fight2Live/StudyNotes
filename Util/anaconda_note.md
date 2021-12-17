@@ -15,3 +15,12 @@
 activate env_name
 ```
 
+
+
+
+
+
+
+# jupyter服务
+
+jupyter notebook --allow-root
