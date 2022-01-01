@@ -27,9 +27,13 @@
   - [题目本](./Algorithm/题目本.md)   
 
 - BigData  
+  - [ElasticSearch](./BigData/ElasticSearch.md)   
+  
   - [Hadoop](./BigData/Hadoop.md)   
   
   - [Hive](./BigData/Hive.md)   
+  
+  - [Kafka](./BigData/Kafka.md)   
   
   - [Spark](./BigData/Spark.md)   
 
@@ -85,6 +89,8 @@
     - [随机森林](./DataAnalyze/MachineLearning/随机森林.md)   
 
 - PythonPackage  
+  - [log](./PythonPackage/log.md)   
+  
   - [matplotlib](./PythonPackage/matplotlib.md)   
   
   - [mlxtend](./PythonPackage/mlxtend.md)   
@@ -102,4 +108,8 @@
 - Util  
   - [anaconda_note](./Util/anaconda_note.md)   
   
+  - [Docker](./Util/Docker.md)   
+  
   - [git_note](./Util/git_note.md)   
+  
+  - [Linux](./Util/Linux.md)   

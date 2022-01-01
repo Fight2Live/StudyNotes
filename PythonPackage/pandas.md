@@ -128,8 +128,21 @@ df5 = pd.DataFrame.from_dict(dict1)
 ```python
 # 可以将空值填充为特定数值，然后根据index进行删除
 df['column'] = df['column'].fillna('99999')
+# 1
 index_list = df[(df['column']=='99999')].index.tolist()
 df = df.drop(index_list)
+# 2
+df_2 = df[(df['column']!='99999')]
+
+# 数字型
+import numpy as np
+value is np.nan
+
+# 时间
+value is pd.NaT
+
+
+
 ```
 
 
@@ -258,6 +271,15 @@ df = df[(df['column_name1' <!=> 条件1] & df['column_name2' <!=> 条件2])]  # 
 
 
 
+```python
+# .between()，返回列column中在区间left,right中的部分，inclusive为true则为开区间
+df = df[(df.['column'].between(left, right, inclusive=True))]
+```
+
+
+
+
+
 
 
 ### 新加列
@@ -349,6 +371,124 @@ pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
 ```PYTHON
 df_groupby = df.groupby("字段名")
 ```
+
+
+
+## 时间序列
+
+
+
+### 筛选
+
+```PYTHON
+import pandas as pd
+ 
+#读取文件
+df = pd.read_csv('./TianQi.csv')
+ 
+#获取九月份数据的几种方法
+#方法一  使用行索引切片，['2019/9/1':'2019/9/30']，缺点是要求日期必须是连续的。为了方便查看取前5条，以下其他方法均取前5条，由于未进行排序，顺序会有差异
+df.set_index('日期',inplace=True)
+print(df['2019/9/1':'2019/9/30'].head())  #或者print(df.loc['2019/9/1':'2019/9/30',:]) 
+'''
+打印：
+     最高温度 最低温度  天气  风向 风级 空气质量
+日期                  
+2019/9/1 33℃ 19℃ 多云~晴 西南风 2级  良
+2019/9/2 34℃ 20℃   晴  南风 2级  良
+2019/9/3 33℃ 20℃   晴 东南风 2级  良
+2019/9/7 34℃ 21℃   晴 西南风 2级  良
+2019/9/8 35℃ 22℃ 晴~多云 东北风 2级  良
+'''
+ 
+#方法二  利用列表生成式和startwith('2019/9')生成bool列表,缺点，比较麻烦。
+print(df.loc[[True if i.startswith('2019/9') else False for i in df.index.tolist()],:].head())
+'''
+打印：
+     最高温度 最低温度  天气  风向 风级 空气质量
+日期                  
+2019/9/4 32℃ 19℃   晴 东南风 2级  良
+2019/9/5 33℃ 20℃   晴 东南风 2级  良
+2019/9/6 33℃ 20℃   晴 东南风 1级  良
+2019/9/1 33℃ 19℃ 多云~晴 西南风 2级  良
+2019/9/2 34℃ 20℃   晴  南风 2级  良
+'''
+ 
+#方法三  利用pandas的str和startswith('2019/9')|contains('2019/9')。
+df1 = pd.read_csv('./TianQi.csv')
+print(df1[df1['日期'].str.startswith('2019/9')].head())
+'''
+打印：
+     日期 最高温度 最低温度  天气  风向 风级 空气质量
+243 2019/9/4 32℃ 19℃   晴 东南风 2级  良
+244 2019/9/5 33℃ 20℃   晴 东南风 2级  良
+245 2019/9/6 33℃ 20℃   晴 东南风 1级  良
+246 2019/9/1 33℃ 19℃ 多云~晴 西南风 2级  良
+247 2019/9/2 34℃ 20℃   晴  南风 2级  良
+'''
+ 
+#方法四  讲日期转换成datetime类型
+df1['日期'] = pd.to_datetime(df1['日期'])
+df1.set_index('日期',inplace=True,drop=True)
+#print(df1['2019'])  #取2019年数据，或者df.loc['2019']
+print(df1['2019/09'].head())  
+'''
+ 取201909月数据，其他变形写法df['2019-9'] df['2019-09'] df['2019/9'] df.loc['2019-9',:] df.loc['2019-09',:] df.loc['2019/09',:] df.loc['2019/9',:]
+打印：
+      最高温度 最低温度  天气  风向 风级 空气质量
+日期                   
+2019-09-04 32℃ 19℃   晴 东南风 2级  良
+2019-09-05 33℃ 20℃   晴 东南风 2级  良
+2019-09-06 33℃ 20℃   晴 东南风 1级  良
+2019-09-01 33℃ 19℃ 多云~晴 西南风 2级  良
+2019-09-02 34℃ 20℃   晴  南风 2级  良
+'''
+#注意如果要获取某一天的数据，则必须使用切片，比如df['2019/9/1':'2019/9/1'] 
+'''
+获取一段时间
+df1.truncate(after = '2019-9-01') # 返回 after 以前的数据
+df1.truncate(before = '2019-9-01') # 返回 before 以后的数据
+df1['20190901':'2019/9/10']
+'''
+ 
+#方法五  #读取文件时，通过parse_dates=['日期'],将日期转化为datetime类型，相当于 pd.to_datetime。同时可以使用index_col将那一列作为的行索引，相当有set_index。
+df2 = pd.read_csv('./TianQi.csv',parse_dates=['日期'])
+df2['年'] = df2['日期'].dt.year
+df2['月'] = df2['日期'].dt.month
+qstr = "年=='2019' and 月=='9'"
+print(df2.query(qstr).head())
+'''
+打印：
+      日期 最高温度 最低温度  天气  风向 风级 空气质量   年 月
+243 2019-09-04 32℃ 19℃   晴 东南风 2级  良 2019 9
+244 2019-09-05 33℃ 20℃   晴 东南风 2级  良 2019 9
+245 2019-09-06 33℃ 20℃   晴 东南风 1级  良 2019 9
+246 2019-09-01 33℃ 19℃ 多云~晴 西南风 2级  良 2019 9
+247 2019-09-02 34℃ 20℃   晴  南风 2级  良 2019 9
+'''
+ 
+'''
+dt的其他常用属性和方法如下：
+df['日期'].dt.day  # 提取日期
+df['日期'].dt.year # 提取年份
+df['日期'].dt.hour # 提取小时
+df['日期'].dt.minute # 提取分钟
+df['日期'].dt.second # 提取秒
+df['日期'].dt.week # 一年中的第几周
+df['日期'].dt.weekday # 返回一周中的星期几，0代表星期一，6代表星期天
+df['日期'].dt.dayofyear # 返回一年的第几天
+df['日期'].dt.quarter # 得到每个日期分别是第几个季度。
+df['日期'].dt.is_month_start # 判断日期是否是每月的第一天
+df['日期'].dt.is_month_end # 判断日期是否是每月的最后一天
+df['日期'].dt.is_leap_year # 判断是否是闰年
+df['日期'].dt.month_name() # 返回月份的英文名称
+df['日期'].dt.to_period('Q') # M 表示月份，Q 表示季度，A 表示年度，D 表示按天
+df['日期'].dt.weekday_name # 返回星期几的英文 由于pandas版本问题，改变pandas版本在cmd中输入：pip install --upgrade pandas==0.25.3
+Series.dt.normalize() # 函数将给定系列对象中的时间转换为午夜。
+'''
+```
+
+
 
 
 
