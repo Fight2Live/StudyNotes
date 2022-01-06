@@ -229,6 +229,42 @@ docker inspect 容器id
 
 
 
+# 镜像
+
+镜像是一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的内容，包括代码、库、环境等等
+
+所有的应用，直接打包docker镜像可以直接跑起来
+
+获取：
+
+- 从远程仓库下载
+- 朋友处获得
+- 自己构造
+
+## UnionFS（联合文件系统）
+
+
+
+
+
+## 加载原理
+
+镜像实际上由一层一层的文件系统组成，即联合文件系统。
+
+bootfs(boot file system)主要包含bootloader和kernel，bootloader主要是引导加载kernel，Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是bootfs。这一层与我们典型的Linux/Unix系统是一样的，包含boot加载器和内核。当boot加载完成后整个内核就都在内存中了，此时内存的使用权已由bootfs转交给内核，系统也会卸载bootfs。
+
+rootfs（root fiile system）在bootfs之上，包含的就是典型Linux系统中的/dev, /proc, /bin等标准目录和文件。rootfs就是各种不同的操作系统发行版，比如CentOS，Ubuntu等。
+
+
+
+## 分层原理
+
+
+
+# 数据卷
+
+
+
 
 
 # 安装MySQL
@@ -343,6 +379,77 @@ docker build [OPTIONS] PATH | URL |-
 
 --network: 默认 default。在构建期间设置RUN指令的网络模式
 ```
+
+
+
+# Docker网络
+
+## Docker0
+
+我们每启动一个docker容器，若不指定网络的情况下，docker会自动给容器分配一个ip。我们只要安装了docker，就会有一个网卡docker0，用桥接模式，veth-pair技术。
+
+**veth-pair**就是一对虚拟设备接口，成对出现的，一段连接协议，一段彼此相连。所以它可以充当桥梁，连接各种虚拟网络设备
+
+> OpenStac，Docker容器之间的连接，ovs的连接，都是使用了veth-pair
+
+
+
+
+
+## --link
+
+> 假设我们编写了一个微服务，需要连接数据库database url=ip:，这时候数据库挂掉了，重启后ip变了，那么在项目不重启的情况下，如何使用名字来访问对应的容器？
+
+```SHELL
+docker run --link 要连接的容器名 --name 容器名 镜像名
+```
+
+会将要连接的容器名与其ip写进即将运行的容器中的hosts文件中。
+
+
+
+docker0不支持容器名连接访问，现在多用自定义网络
+
+
+
+## 自定义网络
+
+网络模式：
+
+bridge：桥接docker（默认）
+
+none：不配置网络
+
+host：和宿主机共享网络
+
+container：容器网络联通（用的少）
+
+```shell
+docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet
+```
+
+
+
+自定义网络相当于创建了一个局域网，docker0和--link的缺点都完善了，能互相ping通。
+
+同时可以让不同的集群使用不同的网络，保证集群是安全和健康的。
+
+
+
+
+
+
+
+## 网络联通
+
+假设现在有两个网络A，B，A上的容器与B上的容器是无法互相ping通的。可以用connect进行网络联通，将A上的容器a1联接网络B，那么a1即可与网络B上的容器进行通信
+
+```SHELL
+# connect     Connect a container to a network
+docker network connect [OPTION] NETWORK CONTAINER
+```
+
+
 
 
 
