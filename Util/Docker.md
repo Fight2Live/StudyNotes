@@ -276,6 +276,18 @@ rootfs（root fiile system）在bootfs之上，包含的就是典型Linux系统�
 
 
 
+# Ubuntu
+
+在Ubuntu中增加ip相关tool
+
+```shell
+apt-get update
+apt-get install ethtool
+apt-get install iproute2
+apt-get install bridge-utils
+apt-get install iputils-ping
+```
+
 
 
 
@@ -426,6 +438,7 @@ container：容器网络联通（用的少）
 
 ```shell
 docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet
+docker run --net mynet 镜像	# 在目标网络组上新建容器
 ```
 
 
