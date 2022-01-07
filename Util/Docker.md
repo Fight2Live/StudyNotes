@@ -199,6 +199,16 @@ docker cp 容器id:容器内路径 主机路径
 
 
 
+**将容器打包为镜像**
+
+```shell
+docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+```
+
+
+
+
+
 
 
 ## 其他命令
