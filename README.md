@@ -106,10 +106,10 @@
   - [Selenium](./PythonPackage/Selenium.md)   
 
 - Util  
-  - [anaconda_note](./Util/anaconda_note.md)   
+  - [Anaconda](./Util/Anaconda.md)   
   
   - [Docker](./Util/Docker.md)   
   
-  - [git_note](./Util/git_note.md)   
+  - [Git](./Util/Git.md)   
   
   - [Linux](./Util/Linux.md)   
