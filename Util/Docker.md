@@ -207,6 +207,14 @@ docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 
 
 
+**设置时区**
+
+```SHELL
+docker run -e TZ="Asia/Shanghai" images
+```
+
+
+
 
 
 

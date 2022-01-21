@@ -278,6 +278,23 @@ df = df[(df.['column'].between(left, right, inclusive=True))]
 
 
 
+### 删除
+
+```PYTHON
+df.drop(column_name, axis=1)  # 删除指定列
+df.drop(index)  # 删除具体行
+
+df = df[ ~df[colulmn].str.contains('str') ]  # 删除某列包含某些字符的记录，如若要包含则去掉 ~
+```
+
+
+
+### 替换
+
+```PYTHON
+df.loc[ df[条件列]==条件值, 修改列 ] = new_value
+```
+
 
 
 
@@ -293,6 +310,18 @@ df1.loc[:, 新列名] = df1.apply(get_hour, axis=1)
 ```
 
 
+
+### 重置索引
+
+```python
+df2.index = range(len(df2))
+df2 = df2.reset_index(drop=True)  # drop=True表示删除原索引，不然会在数据表格中新生成一列'index'数据
+df2 = df2.reindex(labels=range(len(df))) 
+                  
+df2 = df2.set_index(keys=['a', 'c'])  # 将原数据a, c列的数据作为索引
+# drop=True，默认，是将数据作为索引后，在表格中删除原数据
+# append=False，默认，是将新设置的索引设置为内层索引，原索引是外层索引
+```
 
 
 
