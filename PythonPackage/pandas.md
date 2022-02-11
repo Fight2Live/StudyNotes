@@ -28,6 +28,34 @@ import pandas as pd
 
 
 
+### 遍历
+
+```python
+# 按行遍历，将DataFrame的每一行迭代为(index, Series)对，可以通过row[name]对元素进行访问。
+df.iterrows() 
+for i, row in df.iterrows() :
+    # i 为index
+    # row为series
+    pass
+
+for t in df.iterrows():
+    # t为tuple
+    pass
+
+# 按行遍历，将DataFrame的每一行迭代为元祖，可以通过row[name]对元素进行访问，比iterrows()效率高。
+df.itertuples()
+
+# 按列遍历，将DataFrame的每一列迭代为(列名, Series)对，可以通过row[index]对元素进行访问。
+df.iteritems()
+```
+
+
+
+
+
+
+
+
 ### 创建对象
 
 #### 从外部文件读取
