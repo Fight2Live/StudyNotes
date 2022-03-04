@@ -74,6 +74,20 @@ ps
 
 
 
+## 查找路径
+
+```shell
+# 查看所有target路径
+whereis tartget
+
+# 查看当前使用的target路径
+which target
+```
+
+
+
+
+
 ## chmod
 
 控制文件的权限
