@@ -207,6 +207,14 @@ docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 
 
 
+**设置时区**
+
+```SHELL
+docker run -e TZ="Asia/Shanghai" images
+```
+
+
+
 
 
 
@@ -401,6 +409,26 @@ docker build [OPTIONS] PATH | URL |-
 
 --network: 默认 default。在构建期间设置RUN指令的网络模式
 ```
+
+
+
+## 自动任务脚本镜像
+
+```SHEEL
+FROM ubuntu-py37
+MAINTAINER liangyy@hi-strong.com
+
+ADD src/ /usr/local/src/
+RUN apt-get update
+RUN apt-get -y install cron
+RUN pip3 install -r /usr/local/src/utils/package.txt
+
+RUN crontab -l | {cat;echo "* * * * * bash python3 /usr/local/src/start.py"} | crontab -
+
+CMD cron
+```
+
+
 
 
 
