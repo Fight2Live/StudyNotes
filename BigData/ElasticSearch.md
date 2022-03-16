@@ -27,13 +27,213 @@ elasticSearch在后台把每个**索引划分成多个分片**，每份分片可
 
 
 
+### 索引别名_alias
+
+​		索引别名API允许使用一个名字来作为一个索引的别名，所有API会自动将别名转换为实际的索引名称。 别名也可以映射到多个索引，别名不能与索引具有相同的名称。别名可以用来做索引迁移和多个索引的查询统一，还可以用来实现视图的功能
+
+```json
+# 查看所有别名
+GET /_aliases
+
+# 查看某个别名下的索引
+GET /_alias/alias_name
+
+#查看别名以2017开头的下的索引
+GET /_alias/2017
+
+# 查看某个索引的别名
+GET /index_name/_alias
+
+# 添加并删除别名
+POST /_aliases
+{
+    "actions" : [
+        { "remove" : { "index" : "test1", "alias" : "alias1" } },
+        { "add" : { "index" : "test2", "alias" : "alias1" } }
+    ]
+}
+```
+
+
+
+将别名与多个索引相关联只是几个添加操作：
+
+```json
+POST /_aliases
+{
+    "actions" : [
+        { "add" : { "index" : "test1", "alias" : "alias1" } },
+        { "add" : { "index" : "test2", "alias" : "alias1" } }
+    ]
+}
+
+# 也可以使用数组的形式
+POST /_aliases
+{
+    "actions" : [
+        { "add" : { "indices" : ["test1", "test2"], "alias" : "alias1" } }
+    ]
+}
+
+# 还可以使用通配符*
+POST /_aliases
+{
+    "actions" : [
+        { "add" : { "index" : "test*", "alias" : "all_test_indices" } }
+    ]
+}
+
+```
+
+
+
+
+
+```json
+# 还可以使用别名实现类似视图的功能
+
+PUT /test1
+{
+  "mappings": {
+    "type1": {
+      "properties": {
+        "user" : {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+# 创建一个user等于kimchy的视图
+POST /_aliases
+{
+    "actions" : [
+        {
+            "add" : {
+                 "index" : "test1",
+                 "alias" : "alias2",
+                 "filter" : { "term" : { "user" : "kimchy" } }
+            }
+        }
+    ]
+}
+```
+
+
+
+
+
+**filter**
+
+如my_index有个字段是team，team字段记录了该数据是那个team的。team之间的数据是不可见的
+
+```json
+POST /_aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "my_index",
+        "alias": "my_index__teamA_alias",
+        "filter":{
+            "term":{
+                "team":"teamA"
+            }
+        }
+      }
+    },
+    {
+      "add": {
+        "index": "my_index",
+        "alias": "my_index__teamB_alias",
+        "filter":{
+            "term":{
+                "team":"teamB"
+            }
+        }
+      }
+    },
+    {
+      "add": {
+        "index": "my_index",
+        "alias": "my_index__team_alias"
+      }
+    }
+  ]
+}
+
+GET /my_index__teamA_alias/_search 只能看到teamA的数据
+GET /my_index__teamB_alias/_search 只能看到teamB的数据
+GET /my_index__team_alias/_search 既能看到teamA的，也能看到teamB的数据
+```
+
+
+
+创建索引时也可以指定别名
+
+```
+PUT /logs_20162801
+{
+    "mappings" : {
+        "type" : {
+            "properties" : {
+                "year" : {"type" : "integer"}
+            }
+        }
+    },
+    "aliases" : {
+        "current_day" : {},
+        "2016" : {
+            "filter" : {
+                "term" : {"year" : 2016 }
+            }
+        }
+    }
+}
+```
+
+
+
+删除别名
+
+```
+DELETE /{index}/_alias/{name}
+index * | _all | glob pattern | name1, name2, …
+name * | _all | glob pattern | name1, name2, …
+
+DELETE /logs_20162801/_alias/current_day
+```
+
+
+
+### 优化索引
+
+1.拆分索引
+
+2.缩小索引
+
+3.滚动索引
+
+4.手动清除缓存
+
+5.手动刷新内存缓冲区
+
+6.手动刷新到硬盘
+
+7.同步刷新
+
+8.强制合并分段
+
+
+
 
 
 ## 字段类型_mapping
 
 - 字符串类型
 
-  text， keyword（不可分词），string
+  text， keyword（不可分词），string(5.0版本后移除)
 
 - 整数
 
@@ -224,9 +424,6 @@ elasticSearch
 
 > 运行状态：http://localhost:9200
 >
-> 首页：http://localhost:5601
-
-
 
 
 
@@ -237,6 +434,14 @@ elasticSearch-head
 
 
 kibana
+
+> http://localhost:5601
+
+
+
+如果需要从外部机器访问，则需要修改相应模块的conf文件夹中的yml配置文件，将其中的network改为0.0.0.0
+
+
 
 
 
@@ -483,7 +688,7 @@ HEAD (_index)
 HEAD /(_index)/_doc/(_id)
 ```
 
-### 1.直接查询
+### 
 
 ```PYTHON
 # 查看指定索引的信息
@@ -494,13 +699,11 @@ GET (_index)/_doc/(id)
 
 ```
 
-
-
-### 2._search
-
 ​	
 
-```
+# 三、复杂搜索
+
+```json
 # 查询所有索引的文档
 GET _search
 GET /_all/_search
@@ -540,14 +743,6 @@ GET twitter/_search
 ```
 
 
-
-#### script_fields
-
-​		有时候我们需要的字段在_source中没有时，可以使用script_field来生成
-
-​	
-
-# 复杂搜索
 
 
 
@@ -619,7 +814,13 @@ term 查询是直接通过倒排索引指定的词条进行精确查找的
 
 
 
-**term和match的区别**
+### 几个搜索语句的区别
+
+1、**term**不会对value进行分词处理，输入的什么就匹配的什么，并且若key是能被分词的类型，则value必须是分词结果中的一个
+
+2、而**match**会对条件value进行分词。
+
+3、短语匹配match_phrase，会对条件value进行分词，然后搜索所有词条。
 
 
 
@@ -650,9 +851,69 @@ GET index/_doc/_search
 
 
 
+# 四、聚合
+
+​		聚合框架有助于根据搜索查询提供聚合数据。聚合查询是数据库中重要的功能特性，ES作为搜索引擎兼数据库，同样提供了强大的聚合分析能力。它基于查询条件来对数据进行分桶、计算的方法。有点类似于 SQL 中的 group by 再加一些函数方法的操作。聚合可以嵌套，由此可以组成复杂的操作（Bucketing聚合可以包含sub-aggregation）
 
 
 
+## 语法
+
+```Json
+"aggregations" : {                        //也可简写为 aggs
+    "<aggregation_name>" : {      // 聚合的名字
+        "<aggregation_type>" : {     //聚合的类型
+            <aggregation_body>      //聚合体：对哪些字段进行聚合
+        }
+        [,"meta" : {  [<meta_data_body>] } ]?                 //元
+        [,"aggregations" : { [<sub_aggregation>]+ } ]?   //在聚合里面在定义子聚合
+    }
+    [,"<aggregation_name_2>" : { ... } ]*                      //聚合的名字
+}
+```
 
 
+
+## aggregation_type
+
+### 1、矩阵统计：matrix_stats
+
+​			返回字段：
+
+| field       | 中文名 |
+| ----------- | ------ |
+| count       | 计数   |
+| mean        | 均值   |
+| variance    | 方差   |
+| skewness    | 偏度   |
+| kurtosis    | 峰度   |
+| covariance  | 协方差 |
+| correlation | 相关性 |
+
+
+
+### 2、常见度量指标
+
+```python
+"""
+1.最大值			max
+2.最小值			min
+3.总和			sum
+4.值计数			value_count	
+5.平均值			avg
+6.加权平均值		   weighted_avg
+7.基数			 cardinality
+8.统计			 stats
+9.扩展统计			extended_stats
+10.中位数绝对偏差	  median_absolute_deviation
+11.百分位			 percentiles
+12.百分位等级		percentile_ranks
+13.地理重心			gep_centroid
+14.地理边界			geo_bounds
+15.最热点			 top_hits
+16.脚本时度量指标	   scripted_metric
+"""
+```
+
+### 3、bucket聚合
 
