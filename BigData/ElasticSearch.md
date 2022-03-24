@@ -820,7 +820,202 @@ term 查询是直接通过倒排索引指定的词条进行精确查找的
 
 2、而**match**会对条件value进行分词。
 
-3、短语匹配match_phrase，会对条件value进行分词，然后搜索所有词条。
+
+
+
+
+## 1、full text query 全文查询
+
+### match
+
+​	标准匹配查询以匹配提供的文本、数字、日期或布尔值。对查询字符串进行分析，并获取词汇单元，然后将各个词汇单元根据参数operator（默认为or）进行匹配及布尔运算，获得最终匹配结果。
+
+​	会对提供的查询条件进行分词。
+
+```json
+{
+    "query":{
+        "match":{
+            "field_1": {
+                "query": "value_1",
+                // 可配合query参数同时使用的常用参数
+                "lenient": true, // 忽略基于格式的错误，例如数字字段提供文本查询值，默认为false
+                "operator": "AND", // 对于词汇单元的匹配模式，默认为“OR”,
+                "minimum_should_match": 1, // 对词汇单元的最小匹配个数
+                "zero_term_query": "all", // 如果查询字符串通过分析器后没有产生词汇单元，那应该如何返回查询结果。默认为none，不返回数据
+
+                "analyzer": "对查询字符串指定分析器", 
+                "fuzziness": 1 , // 用模糊匹配来查询分词过后的单元词汇
+                "prefix_length": 1,  // 模糊匹配时，对于查询字符串所产生的词汇单元，需要固定开始字符数的个数，默认为0
+                "fuzzy_transpositions": false, // 模糊匹配时，对于字符串所产生的词汇单元，允许相邻两个字符换位匹配，默认为true
+                "max_expansions": 2, // 模糊匹配时，对于字符串所产生的词汇单元最大个数，默认为50    
+            } 
+        }
+    }
+}
+```
+
+
+
+
+
+#### match_bool_prefix
+
+​		会对查询字符串使用analyzer分词器处理为多个term，然后基于这些个term进行bool query，除了最后一个term使用前缀查询 其它都是term query。
+
+```json
+{
+    "query": {
+        "match_bool_prefix" : {
+            "message" : "quick brown f"
+        }
+    }
+}
+
+/* 等价于 */
+{
+    "query": {
+        "bool" : {
+            "should": [
+                { "term": { "message": "quick" }},
+                { "term": { "message": "brown" }},
+                { "prefix": { "message": "f"}}
+            ]
+        }
+    }
+}
+
+// 可用参数
+{
+    "operator": "AND",// 对于词汇单元的匹配模式，默认为“OR”,
+    "minimum_should_match": 1, // 对词汇单元的最小匹配个数
+    "analyzer": "对查询字符串指定分析器"
+}
+```
+
+
+
+
+
+#### match_phrase
+
+​		对查询字符串使用analyzer分词器处理为多个term，然后将各个term连接生成一个新的string来匹配搜索文本字段。
+
+​		或者说用输入的原查询字符串来匹配
+
+```json
+/* 
+可以使用参数slop（默认为0）来允许匹配项的字符之间的间隔差，这个字符是指匹配项经分词器之后的term。
+比如查询字符串 query = "5ETF"，目标字符串是 "5G50ETF",该目标字符串的terms=["5", "G", "50", "ETF"]，其中"5"和"ETF"间隔2，所以当slop=0或者1时，无法匹配到，当slop=2时可以匹配 
+问：那"5GETF"能被匹配到么？即slop的值向下兼容么？
+*/
+
+// 可用参数
+{
+    "minimum_should_match": 1, // 对词汇单元的最小匹配个数
+    "analyzer": "对查询字符串指定分析器"
+}
+```
+
+
+
+#### match_phrase_prefix
+
+
+
+
+
+#### mutli_match
+
+```json
+// 可用参数
+{
+    "type": "best_fields"
+    /*
+    best_fields  		 根据得分对结果进行降序排序
+    most_fields  		 按总得分排序
+    cross_fields  		 匹配多个term的文本查询结果时，必须存在至少一个字段才算文档为匹配
+    phrase		 		 同best_fields,但查询方式为 match_phrase
+    phrase_prefix		 同best_fields,但查询方式为 match_phrase_prefix
+    bool_prefix		 	 同best_fields,但查询方式为 match_bool_prefix
+    */
+}
+```
+
+
+
+
+
+### query string query
+
+​		可以细分为两种子类型：query_sring 和 simple_query_sring。她们使用不同的analyzer来处理查询字符串。当查询字符串不符合analyzer语法时，query_string会引发异常，而simple_query_string会丢弃无效部分继续执行。
+
+
+
+#### query_sring 
+
+
+
+#### simple_query_sring
+
+
+
+### interval query
+
+​		与span query类似，根据定义的匹配规则返回结果。根据所用的查询规则或对象，可分为五个类型
+
+```json
+{
+    "query": {
+        "intervals": {
+            "field_1": {
+                // 1.match，可根据对查询文本单词的ordered（顺序）和max_gaps（间隔）返回
+                "match": {
+                    "query": "value1",
+                    "analyzer": "",
+                    "max_gaps": 1, // 匹配时词之间允许的最大间隔、偏移量，默认为-1没有限制。
+                    "ordered": false, // 匹配字词必须按单元词汇的顺序，默认为false
+                    "use_field": "field_2" // 如果指定此参数值，则匹配该值的字段，而不是匹配intervals的字段field_1
+                },
+                
+                // 2.prefix，查询的字符串不再分词，完全匹配，可以在文本最多产生128个匹配。如果超过则算作错误.
+                // prefix的参数只对英文和数字有效，对汉字无效
+                "prefix": {
+                    "prefix": "value1",
+                    "analyzer": "",
+                    "use_field": "field_2" // 如果指定此参数值，则匹配该值的字段，而不是匹配intervals的字段field_1
+                },
+                
+                // 3.wildcard，使用通配符规则匹配，可以在文本最多产生128个匹配。如果超过则算作错误.
+                "wildcard": {
+                    "pattern": "value1",
+                    "analyzer": "",
+                    "use_field": "field_2" // 如果指定此参数值，则匹配该值的字段，而不是匹配intervals的字段field_1
+                },
+                
+                // 4.all_of
+                
+                // 5.any_of
+                
+            }
+        }
+    }
+}
+```
+
+
+
+
+
+## 2、term query 词条级别搜索
+
+
+
+
+
+
+
+## 3、compound query 复合查询
 
 
 
@@ -846,6 +1041,14 @@ GET index/_doc/_search
     }
 }
 ```
+
+
+
+
+
+### 
+
+
 
 
 

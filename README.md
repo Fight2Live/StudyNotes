@@ -57,8 +57,6 @@
     - [ETL](./DataAnalyze/DataBase/ETL.md)   
   
     - [MySQL](./DataAnalyze/DataBase/MySQL.md)   
-  
-    - [noSQL](./DataAnalyze/DataBase/noSQL.md)   
 
   - DeepLearning  
     - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md)   
@@ -89,6 +87,8 @@
     - [随机森林](./DataAnalyze/MachineLearning/随机森林.md)   
 
 - PythonPackage  
+  - [ElasticSearch](./PythonPackage/ElasticSearch.md)   
+  
   - [log](./PythonPackage/log.md)   
   
   - [matplotlib](./PythonPackage/matplotlib.md)   
@@ -100,6 +100,8 @@
   - [pandas](./PythonPackage/pandas.md)   
   
   - [PyTorch](./PythonPackage/PyTorch.md)   
+  
+  - [Requestium](./PythonPackage/Requestium.md)   
   
   - [Scikit-Learn](./PythonPackage/Scikit-Learn.md)   
   
