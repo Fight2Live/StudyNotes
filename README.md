@@ -57,6 +57,8 @@
     - [ETL](./DataAnalyze/DataBase/ETL.md)   
   
     - [MySQL](./DataAnalyze/DataBase/MySQL.md)   
+  
+    - [数据仓库](./DataAnalyze/DataBase/数据仓库.md)   
 
   - DeepLearning  
     - [概念与解释](./DataAnalyze/DeepLearning/概念与解释.md)   
