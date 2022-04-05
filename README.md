@@ -54,8 +54,6 @@
     - [特征工程](./DataAnalyze/Analyze/特征工程.md)   
 
   - DataBase  
-    - [ETL](./DataAnalyze/DataBase/ETL.md)   
-  
     - [MySQL](./DataAnalyze/DataBase/MySQL.md)   
   
     - [数据仓库](./DataAnalyze/DataBase/数据仓库.md)   
@@ -89,6 +87,8 @@
     - [随机森林](./DataAnalyze/MachineLearning/随机森林.md)   
 
 - PythonPackage  
+  - [Django](./PythonPackage/Django.md)   
+  
   - [ElasticSearch](./PythonPackage/ElasticSearch.md)   
   
   - [log](./PythonPackage/log.md)   
@@ -117,3 +117,5 @@
   - [Git](./Util/Git.md)   
   
   - [Linux](./Util/Linux.md)   
+  
+  - [Shell](./Util/Shell.md)   
