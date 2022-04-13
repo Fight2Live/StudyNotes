@@ -280,6 +280,43 @@ with connection.cursor() as cursor:
 
 
 
+
+
+
+
+# 用户认证与权限模块auth
+
+​		auth是django提供的标准权限模块
+
+主要功能包括：
+
+1. create_user	创建用户
+2. authenticate   验证登录
+3. login                 记住登录
+4. logout               退出登录
+5. is_authenticated  判断用户是否登录
+6. @login_required  判断用户是否登录的装饰器
+
+
+
+## User对象
+
+​		1、继承自Django的AbstractUser类
+
+
+
+同时在settings中加上
+
+```python
+AUTH_USER_MODEL = 'APP_NAME.model_name'
+```
+
+
+
+
+
+
+
 # 前后端分离
 
 会遇到两大问题，一个是会话信息的保存，一个是跨域问题
