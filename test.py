@@ -15,3 +15,6 @@ def add_ftp(s):
     return 0
 
 
+def test_func():
+    return 1+1
+
