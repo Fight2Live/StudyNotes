@@ -216,8 +216,6 @@ ordering = ['-pub_date', 'author']  # 表示先按'pub_date'字段进行降序�
 '''
 ```
 
-
-
 ## 模型迁移与建表
 
 ```shell
@@ -288,13 +286,9 @@ with connection.cursor() as cursor:
 
 ​        类似mybatis，可以自定义管理器，以增强功能，同时可以统合一些重复性高的filter等
 
-
-
 # 序列化器Serializer
 
 序列化器的主要工作就是将前端传入后端的JSON数据转换为ORM模型映射。
-
-
 
 # 路由URL
 
@@ -375,25 +369,23 @@ INSTALLED_APPS = [
 ### 4.2、数据迁移
 
 ```shell
-python manager.py makemigrations
+python manager.py makemigrations  # 相当于在该app下建立 migrations目录，并记录下你所有的关于modes.py的改动
 python manager.py migrate
 ```
 
 ### 4.3、编写View
 
-
-
 ### 4.4、设置Url
-
-
 
 ### 4.5、前端部分
 
 
 
+### 4.6、迁移migrate
 
-
-
+```python
+python manager.py makemigrations  # 
+```
 
 # 用户认证与权限模块auth
 
