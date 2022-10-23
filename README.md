@@ -47,8 +47,6 @@
   
     - [报表细节](./DataAnalyze/Analyze/报表细节.md)   
   
-    - [描述性统计分析](./DataAnalyze/Analyze/描述性统计分析.md)   
-  
     - [数据预处理](./DataAnalyze/Analyze/数据预处理.md)   
   
     - [特征工程](./DataAnalyze/Analyze/特征工程.md)   
@@ -88,6 +86,11 @@
 
     - 李航-统计学习方法  
       - [第一章 概论](./DataAnalyze/MachineLearning/李航-统计学习方法/第一章 概论.md)   
+
+  - Statistics  
+    - [描述性统计分析](./DataAnalyze/Statistics/描述性统计分析.md)   
+  
+    - [数据的收集](./DataAnalyze/Statistics/数据的收集.md)   
 
 - PythonPackage  
   - [Django](./PythonPackage/Django.md)   
