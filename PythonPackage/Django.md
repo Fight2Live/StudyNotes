@@ -379,8 +379,6 @@ python manager.py migrate
 
 ### 4.5、前端部分
 
-
-
 ### 4.6、迁移migrate
 
 ```python
