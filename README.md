@@ -126,9 +126,15 @@
   
   - [Git](./Util/Git.md)   
   
+  - [Java](./Util/Java.md)   
+  
   - [JVM](./Util/JVM.md)   
   
   - [Linux](./Util/Linux.md)   
+  
+  - [MQ](./Util/MQ.md)   
+  
+  - [Python](./Util/Python.md)   
   
   - [Redis](./Util/Redis.md)   
   
