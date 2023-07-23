@@ -1,48 +1,34 @@
+> linux系统基本上分两大类：
+> 1 RedHat系列：Redhat、Centos、Fedora等
+> 2 Debian系列：Debian、Ubuntu等
 
+> RedHat 系列：
+> 1 常见的安装包格式 rpm 包，安装rpm包的命令是 “rpm -参数”
+> 2 包管理工具 yum
+> 3 支持tar包
 
-
-
->linux系统基本上分两大类：
->1 RedHat系列：Redhat、Centos、Fedora等
->2 Debian系列：Debian、Ubuntu等
-
->RedHat 系列：
->1 常见的安装包格式 rpm 包，安装rpm包的命令是 “rpm -参数”
->2 包管理工具 yum
->3 支持tar包
-
->Debian系列：
->1 常见的安装包格式 deb 包，安装deb包的命令是 “dpkg -参数”
->2 包管理工具 apt-get
->3 支持tar包
+> Debian系列：
+> 1 常见的安装包格式 deb 包，安装deb包的命令是 “dpkg -参数”
+> 2 包管理工具 apt-get
+> 3 支持tar包
 
 # 常用命令
 
 ## 重命名
-
-
 
 ```SHELL
 # 可以用mv a b 来进行重命名
 mv a.txt b.txt
 ```
 
-
-
-
-
 ## 删除
 
-
-
 ```shell
-rm -f file_name	# 删除指定文件
-rm -f *			# 删除当前目录下的所有文件
-rm -f *.txt		# 删除当前目录下所有txt文件
-rm -fr dir_path	# 删除文件夹即所有子文件
+rm -f file_name    # 删除指定文件
+rm -f *            # 删除当前目录下的所有文件
+rm -f *.txt        # 删除当前目录下所有txt文件
+rm -fr dir_path    # 删除文件夹即所有子文件
 ```
-
-
 
 ## 端口
 
@@ -72,8 +58,6 @@ ps
 # x:显示所有程序，不以终端机来区分
 ```
 
-
-
 ## 查找路径
 
 ```shell
@@ -83,10 +67,6 @@ whereis tartget
 # 查看当前使用的target路径
 which target
 ```
-
-
-
-
 
 ## chmod
 
@@ -101,23 +81,18 @@ chmod [-cfvR] [--help] [--version] mode file...
 -R : 对目前目录下的所有文件与子目录进行相同的权限变更(即以递归的方式逐个变更)
 ```
 
+| #   | 权限         | rwx | 二进制 |
+|:--- |:---------- |:--- |:--- |
+| 7   | 读 + 写 + 执行 | rwx | 111 |
+| 6   | 读 + 写      | rw- | 110 |
+| 5   | 读 + 执行     | r-x | 101 |
+| 4   | 只读         | r-- | 100 |
+| 3   | 写 + 执行     | -wx | 011 |
+| 2   | 只写         | -w- | 010 |
+| 1   | 只执行        | --x | 001 |
+| 0   | 无          | --- | 000 |
 
-
-| #    | 权限           | rwx  | 二进制 |
-| :--- | :------------- | :--- | :----- |
-| 7    | 读 + 写 + 执行 | rwx  | 111    |
-| 6    | 读 + 写        | rw-  | 110    |
-| 5    | 读 + 执行      | r-x  | 101    |
-| 4    | 只读           | r--  | 100    |
-| 3    | 写 + 执行      | -wx  | 011    |
-| 2    | 只写           | -w-  | 010    |
-| 1    | 只执行         | --x  | 001    |
-| 0    | 无             | ---  | 000    |
-
-
-
-
-# 查看系统信息
+## 查看系统信息
 
 ```shell
 # 电脑及操作系统信息
@@ -130,10 +105,6 @@ cat /proc/version
 cat /etc/issue
 ```
 
-
-
-
-
 # Ubuntu安装IP相关的tool
 
 ```SHELL
@@ -144,9 +115,32 @@ apt-get install bridge-utils
 apt-get install iputils-ping
 ```
 
+# 修改主机名与静态IP
+
+1. 查看需要修改的网卡`ifconfig`
+
+2. 修改`/etc/network/interfaces`的文件内容
+
+```shell
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+
+auto ens33    # 要修改的网卡名
+iface ens33 inet static
+address 192.168.10.101    # 要修改成的IP
+netmask 255.255.255.0     # 子网掩码
+gateway 192.168.10.2      # 网关
+dns-nameservers 192.168.10.2    # DNS解析
+```
+
+3. 重启网络`/etc/init.d/networking restart`
 
 
 
+    4. 修改`/etc/hostname`下的主机名，重启机器生效
+
+# Ubuntu安装Java
 
 # Ubuntu安装python
 
@@ -164,7 +158,6 @@ apt-get install iputils-ping
 # sudo apt install libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev -y
 # sudo apt-get install libbz2-dev
 # sudo apt-get install zlib1g-dev
-
 ```
 
 #### 3. 下载Python源程序压缩包
@@ -218,8 +211,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 # pip3 install --upgrade pip
 ```
 
-
-
 # 安装npm
 
 ```SHELL
@@ -240,12 +231,7 @@ npm config set registry https://registry.npm.taobao.org
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 cd /usr/bin
 ln -s /usr/local/node/bin/cnpm cnpm
-
 ```
-
-
-
-
 
 # 挂载多个硬盘到一个目录下
 
@@ -259,8 +245,6 @@ ln -s /usr/local/node/bin/cnpm cnpm
   逻辑卷建立在卷组之上，卷组中的未分配空间可以用于建立新的逻辑卷，逻辑卷建立后可以动态地扩展和缩小空间。系统中的多个逻辑卷可以属于同一个卷组，也可以属于不同的多个卷组
 
 - PE（Physical Extent）- 物理块
-
-
 
 ```shell
 # 查看当前磁盘信息
@@ -302,4 +286,3 @@ mount /dev/卷组名/逻辑卷名 挂载目录
 vim /etc/fstab
 # 加上 /dev/卷组名/逻辑卷名 挂载目录 ext3 defaluts 1 2
 ```
-

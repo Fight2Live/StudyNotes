@@ -31,6 +31,8 @@
   
   - [Hadoop](./BigData/Hadoop.md)   
   
+  - [Hadoop安装与配置](./BigData/Hadoop安装与配置.md)   
+  
   - [Hive](./BigData/Hive.md)   
   
   - [Kafka](./BigData/Kafka.md)   
