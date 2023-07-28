@@ -259,3 +259,65 @@
 | _min             |     | 返回指定字段的最小可用之              |     |
 | _max             |     | 返回指定字段的最大可用之              |     |
 | rejectOnNotFound |     |                           |     |
+
+
+
+
+
+# 迁移
+
+        为了将其他开发人员的数据库机构同步至本地，可以通过`prisma generate`进行数据库迁移。它能够生成本地的一个`.sql`数据库结构文件，并一起通过git进行版本管理。
+
+        需要注意的是，它的主要目的是管理数据库结构的变化，并不会带着数据一起。
+
+
+
+## 操作
+
+        执行以下命令后，会根据`schema.prisma`文件，与数据库进行比对后，生成`TimeStamp_%option_name%.sql`文件
+
+```shell
+yarn prisma migrate dev --name %option_name%
+```
+
+        如果是第一次执行，会进行
+
+
+
+> 需要注意的是，Prisma不支持一些数据库特性的迁移，包括但不限于：
+> 
+> - 存储过程
+> 
+> - 触发器
+> 
+> - 视图
+> 
+> - 部分索引
+> 
+> 要在数据库中添加一个不支持的特性, 必须执行迁移前在[自定义迁移](https://prisma.yoga/guides/database/developing-with-prisma-migrate/customizing-migrations/)中包含该特性。
+
+
+
+
+
+**问题**
+
+- 若是修改字段，能保证原字段的数据都存在么？
+
+A：
+
+    不能，那原字段的数据将都被清空，并以默认值进行填补。因为`Prisma`对更改字段的操作是先Remove再Add。
+
+    也就是说，如果开发者A在本地将字段`name`更改为`newName`，并执行了`prisma migrate dev --name change_field` ，将生成的迁移文件一起push到了仓库。这时开发者B拉取仓库后，通过命令`prisma migrate dev`将A的改动同步至本地，会将原字段`name`的值都清空
+
+    **注意：** A调整字段名后，在执行的migrate会将涉及的表**数据都清空**，然后才生成`.sql`文件。
+
+- 能保留原数据进行迁移吗？
+
+A：
+
+    如果是同步新字段、新表的结构，那是不会影响原数据的；
+
+    而如果是初始化迁移、字段名修改等操作，则会清空涉及的表的数据；
+
+- 
