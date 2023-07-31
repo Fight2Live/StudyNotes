@@ -260,17 +260,36 @@
 | _max             |     | 返回指定字段的最大可用之              |     |
 | rejectOnNotFound |     |                           |     |
 
-
-
-
-
 # 迁移
 
         为了将其他开发人员的数据库机构同步至本地，可以通过`prisma generate`进行数据库迁移。它能够生成本地的一个`.sql`数据库结构文件，并一起通过git进行版本管理。
 
         需要注意的是，它的主要目的是管理数据库结构的变化，并不会带着数据一起。
 
+## 相关命令
 
+```shell
+npx prisma db pull
+npx prisma db push
+
+# 此命令删除并重新创建数据库，或通过删除所有数据、表、索引和其他来进行重置
+npx prisma migrate reset
+
+# 将schema.prisma中的模型迁移至数据库，若冲突会以schema中的为准，reset数据库
+npx prisma migrate dev
+## dev的一些参数
+--name %optionName%    # 命名此次迁移
+--create-only          # 只生成迁移文件，不自动执行，可人为进行修改，后续需要再次执行dev命令使其生效
+
+# 命令用于将更改部署到暂存、测试和生产环境，它只运行迁移文件。
+# 它不会使用 Prisma 架构文件来获取模型。
+npx prisma migrate deploy
+
+# 可将迁移标记为以应用，或回滚至目标版本
+npx prisma migrate resolve
+--applied %migrateName%   # 将migrateName标为已应用，执行dev时会跳过改迁移
+--rolled-back %migrateName%  # 回滚至migrateName版本的迁移
+```
 
 ## 操作
 
@@ -281,8 +300,6 @@ yarn prisma migrate dev --name %option_name%
 ```
 
         如果是第一次执行，会进行
-
-
 
 > 需要注意的是，Prisma不支持一些数据库特性的迁移，包括但不限于：
 > 
@@ -296,10 +313,6 @@ yarn prisma migrate dev --name %option_name%
 > 
 > 要在数据库中添加一个不支持的特性, 必须执行迁移前在[自定义迁移](https://prisma.yoga/guides/database/developing-with-prisma-migrate/customizing-migrations/)中包含该特性。
 
-
-
-
-
 **问题**
 
 - 若是修改字段，能保证原字段的数据都存在么？
@@ -312,6 +325,8 @@ A：
 
     **注意：** A调整字段名后，在执行的migrate会将涉及的表**数据都清空**，然后才生成`.sql`文件。
 
+    **如果需要修改字段，需要采取另外的操作**。
+
 - 能保留原数据进行迁移吗？
 
 A：
@@ -320,4 +335,55 @@ A：
 
     而如果是初始化迁移、字段名修改等操作，则会清空涉及的表的数据；
 
-- 
+### 字段修改
+
+默认情况下，重命名schema中的一个字段会导致:
+
+- `CREATE` 一新的列 (例如, `fullname`)
+- `DROP` 现有列 (for example, `name`) 和该列中的数据
+
+要真正**重命名**一个字段，且在生产中运行迁移时避免数据丢失，需要在将迁移 SQL 应用到数据库之前修改生成的迁移 SQL 语句。考虑下面的 schema 片段 - `biograpy`字段是拼写错误的。
+
+```python
+model Profile {  
+    id       Int    @id @default(autoincrement())  
+    biograpy String  # 需要更改
+    userId   Int  
+    user     User   @relation(fields: [userId], references: [id])
+}
+```
+
+1. 重命名 `biograpy` 字段为 `biography`:
+
+```python
+model Profile {  
+    id       Int    @id @default(autoincrement())  
+    biography String  # 修改后
+    userId   Int  
+    user     User   @relation(fields: [userId], references: [id])
+}
+```
+
+2. 运行命令，表示仅生成迁移文件，但不执行
+
+```shell
+npx prisma migrate dev --name rename-migration --create-only
+```
+
+3. 将生成的`.sql`文件中的语句由`DROP COLUMN, ADD COLUMN` ，更改为`RENAME TO`
+
+```sql
+ALTER TABLE "Profile" RENAME COLUMN "biograpy" TO "biography"
+```
+
+4. 保存与应用
+
+```shell
+npx prisma migrate dev
+```
+
+5. 如果同时还修改了字段类型，在第四步结束后，会自动再生成一个`.sql`迁移文件，并提示输入`migrate name`
+
+![](C:\Users\30935\AppData\Roaming\marktext\images\2023-07-31-12-01-21-image.png)
+
+## 基线Baseline
