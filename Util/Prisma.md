@@ -387,3 +387,48 @@ npx prisma migrate dev
 ![](C:\Users\30935\AppData\Roaming\marktext\images\2023-07-31-12-01-21-image.png)
 
 ## 基线Baseline
+
+## 回滚
+
+        `npx prisma migrate resolve --rolled-back`**是用于在迁移异常时回滚执行点的，而不是将当前的数据库向下迁移到历史特定版本**。
+
+        当执行`npx prisma migrate dev`，或`npx prisma migrate deploy`时，如果中间报错，如：
+
+```log
+Applying migration `20230801023212_add_field_test`
+Error: P3018
+
+A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+
+Database error code: 1060
+
+Database error:
+Duplicate column name 'test_roll_back'
+
+Please check the query number 1 from the migration file.
+```
+
+这时需要执行`npx prisma migrate resolve --rolled-back 20230801023212_add_field_test`，来将migrate执行点回退到出错的`20230801023212_add_field_test`上，然后解决相关问题后才能继续migrate。
+
+        当前Prisma Migrate不会在没有重置数据库的情况下回滚迁移，也就是说不支持回滚至特定历史版本。
+
+       **如果需要回滚至特定版本，可以采取以下方法**：
+
+1. （推荐）直接更改`schema.prisma`文件，创建新的迁移，以进为退。
+
+2. 清空数据库中的`_prisma_migrations表`，并将文件夹`./prisma/migrations/`下的文件夹删除至想要回退到的版本，然后重新执行迁移命令。（但该操作会导致其他开发人员本地的migrate不匹配，数据库结构异常，同时还有面临清空数据的风险）
+
+3. 进行新迁移前，先通过`migrate diff`命令生成向下迁移的sql文件，当`dev \ deploy`发生异常需要回退时，执行
+   
+   ```shell
+   # 生成向下迁移文件
+   npx prisma migrate diff --from-schema-datamodel .\prisma\schema.prisma --to-schema-datasource .\prisma\schema.prisma --script ">down.sql"
+   
+   # 执行向下迁移文件
+   npx prisma db execute --file ./down.sql --schema prisma/schema.prisma
+   
+   # 标记异常迁移
+   npx prisma migrate resolve --rolled-back add_profile
+   ```
+
+4. 
