@@ -262,6 +262,10 @@
 
 # 迁移
 
+> [Prisma Migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate)
+> 
+> [CLI Reference migrate](https://www.prisma.io/docs/reference/api-reference/command-reference#migrate-dev)
+
         为了将其他开发人员的数据库机构同步至本地，可以通过`prisma generate`进行数据库迁移。它能够生成本地的一个`.sql`数据库结构文件，并一起通过git进行版本管理。
 
         需要注意的是，它的主要目的是管理数据库结构的变化，并不会带着数据一起。
@@ -311,29 +315,9 @@ yarn prisma migrate dev --name %option_name%
 > 
 > - 部分索引
 > 
+> - 字段修改
+> 
 > 要在数据库中添加一个不支持的特性, 必须执行迁移前在[自定义迁移](https://prisma.yoga/guides/database/developing-with-prisma-migrate/customizing-migrations/)中包含该特性。
-
-**问题**
-
-- 若是修改字段，能保证原字段的数据都存在么？
-
-A：
-
-    不能，那原字段的数据将都被清空，并以默认值进行填补。因为`Prisma`对更改字段的操作是先Remove再Add。
-
-    也就是说，如果开发者A在本地将字段`name`更改为`newName`，并执行了`prisma migrate dev --name change_field` ，将生成的迁移文件一起push到了仓库。这时开发者B拉取仓库后，通过命令`prisma migrate dev`将A的改动同步至本地，会将原字段`name`的值都清空
-
-    **注意：** A调整字段名后，在执行的migrate会将涉及的表**数据都清空**，然后才生成`.sql`文件。
-
-    **如果需要修改字段，需要采取另外的操作**。
-
-- 能保留原数据进行迁移吗？
-
-A：
-
-    如果是同步新字段、新表的结构，那是不会影响原数据的；
-
-    而如果是初始化迁移、字段名修改等操作，则会清空涉及的表的数据；
 
 ### 字段修改
 
@@ -386,33 +370,34 @@ npx prisma migrate dev
 
 ![](C:\Users\30935\AppData\Roaming\marktext\images\2023-07-31-12-01-21-image.png)
 
-## 基线Baseline
-
 ## 回滚
 
-        `npx prisma migrate resolve --rolled-back`**是用于在迁移异常时回滚执行点的，而不是将当前的数据库向下迁移到历史特定版本**。
+        基于prisma工具的功能，有两种回滚方式，一种是向上迁移发生异常时需要回滚，另一种是已经向上迁移成功后因其他原因需要回滚。
 
-        当执行`npx prisma migrate dev`，或`npx prisma migrate deploy`时，如果中间报错，如：
+### 异常回滚
 
-```log
-Applying migration `20230801023212_add_field_test`
-Error: P3018
+        在`dev \ deploy`期间，**如发生错误**，可通过执行`npx prisma db execute --file down.sql`来将数据库结构回退至最近的版本。
 
-A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+        但需要在`dev \ deploy`前，先执行以下语句来生成down.sql文件。
 
-Database error code: 1060
-
-Database error:
-Duplicate column name 'test_roll_back'
-
-Please check the query number 1 from the migration file.
+```shell
+npx prisma migrate diff \
+    --from-schema-datamodel .\prisma\schema.prisma \
+    --to-schema-datasource .\prisma\schema.prisma \
+    --script ">down.sql"
 ```
 
-这时需要执行`npx prisma migrate resolve --rolled-back 20230801023212_add_field_test`，来将migrate执行点回退到出错的`20230801023212_add_field_test`上，然后解决相关问题后才能继续migrate。
+`migrate diff`的原理是比较`from`中的数据结构，与`to`中的数据结构是否相同。
 
-        当前Prisma Migrate不会在没有重置数据库的情况下回滚迁移，也就是说不支持回滚至特定历史版本。
+然后执行`npx prisma db execute --file down.sql`手动还原结构。并还需要执行`npx prisma migrate resolv --rolled-back 20230802024446_diff_3`来将发生错误的迁移标为已回滚，只要这样才能当错误解决完后继续通过`dev \ deploy`命令来继续迁移。
 
-       **如果需要回滚至特定版本，可以采取以下方法**：
+### 正常回滚
+
+        如果在`dev \ deploy`期间没发生错误，已经成功向上迁移，则原先生成的`down.sql`文件其实就不会有应用场景了。这时如果像上面一样操作，就会导致数据库结构与项目模型不一致，在进行`dev \ deploy`时会要求**重置数据库**。
+
+        所以如果向上迁移成功，而我们有需要将结构还原，那么最好的就是去更改`schema.prisma`中的结构，重新生成一个新的向上迁移文件，已进为退。
+
+**如果需要回滚至特定版本，可以采取以下方法**：
 
 1. （推荐）直接更改`schema.prisma`文件，创建新的迁移，以进为退。
 
@@ -431,4 +416,110 @@ Please check the query number 1 from the migration file.
    npx prisma migrate resolve --rolled-back add_profile
    ```
 
-4. 
+
+
+
+
+## 常见问题
+
+### 执行`prisma db execute --file down.sql`时，报编码错误：
+
+```log
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '��-' at line 1
+```
+
+**解决方式1**：
+
+        可能是由于在生成`down.sql`文件时，命令异常导致的编码问题，如果是在Windows平台下执行的`diff`命令，确保`--script ">down.sql"`后面有双引号括起来。
+
+**解决方式2**：
+
+        如果是在本地执行发生这个异常，也可以通过`navicat`等数据库工具来执行该文件
+
+### 迁移异常 - 结构与历史不一致
+
+        这个是数据库中的结构，与项目的迁移历史不一致导致的，比如数据库中存在表A，但创建表A的迁移还没执行，这时候就会出现以下提示：
+
+```log
+- The migration `20230802024446_diff_3` failed.
+- Drift detected: Your database schema is not in sync with your migration history.
+
+The following is a summary of the differences between the expected database schema given your migrations files, and the actual schema of the database.
+
+It should be understood as the set of changes to get from the expected schema to the actual schema.
+
+[+] Added tables
+  - test_diff_3
+  - test_diff_4
+
+
+? We need to reset the MySQL database "test_generate" at "127.0.0.1:3306".
+Do you want to continue? All data will be lost. » (y/N)
+```
+
+**解决方式1**
+
+        将发生异常的迁移标记为已解决，然后继续执行
+
+```shell
+npx prisma migrate resolv --applied 20230802024446_diff_3
+npx prisma migrate dev
+```
+
+### 迁移异常 - 新结构已存在
+
+        这是由于准备要执行的迁移文件内容已经在数据库中存在了，如下报错信息所示，提示表`test_diff_3`已存在
+
+```log
+Applying migration `20230802024446_diff_3`
+Error: P3018
+
+A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+
+Migration name: 20230802024446_diff_3
+
+Database error code: 1050
+
+Database error:
+Table 'test_diff_3' already exists
+
+Please check the query number 1 from the migration file.
+```
+
+**解决方式1**
+
+        将该迁移记为已解决，然后继续执行
+
+```shell
+npx prisma migrate resolv --applied 20230802024446_diff_3
+npx prisma migrate deploy
+```
+
+**解决方式2**
+
+        如果数据库中的新结构还不存在数据，可以手动去删除新结构，然后将迁移标为已回滚，再继续执行
+
+```shell
+npx prisma migrate resolv --rolled-back 20230802024446_diff_3
+npx prisma migrate deploy
+```
+
+### 迁移异常 - 发现未解决的迁移错误
+
+        这是由于上一次执行时发生错误，没有完全解决导致的。当我们解决完错误后，还需要
+
+使用命令`migrate resolv --rolled-bake`将迁移记录回滚，然后才能继续执行
+
+```log
+Error: P3009
+
+migrate found failed migrations in the target database, new migrations will not be applied. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+The `20230802055625_diff_4` migration started at 2023-08-02 09:10:42.974 UTC failed
+```
+
+**解决方式**
+
+```shell
+npx prisma migrate resolv --rolled-back 20230802055625_diff_4
+npx prisma migrate deploy
+```
