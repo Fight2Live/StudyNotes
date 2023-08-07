@@ -136,8 +136,6 @@ dns-nameservers 192.168.10.2    # DNS解析
 
 3. 重启网络`/etc/init.d/networking restart`
 
-
-
     4. 修改`/etc/hostname`下的主机名，重启机器生效
 
 # Ubuntu安装Java
