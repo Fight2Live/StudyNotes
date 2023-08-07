@@ -38,6 +38,10 @@
   - [Kafka](./BigData/Kafka.md)   
   
   - [Spark](./BigData/Spark.md)   
+  
+  - [安装与配置-Hadoop](./BigData/安装与配置-Hadoop.md)   
+  
+  - [安装与配置-Zookeeper](./BigData/安装与配置-Zookeeper.md)   
 
 - DataAnalyze
   - Analyze  
