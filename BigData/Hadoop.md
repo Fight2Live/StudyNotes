@@ -144,8 +144,6 @@ Yet Another Resource Negotiator，是一种资源管理器。
 
 3. 不擅长DAG计算
 
-
-
 ## 运行模式
 
 ### 本地模式
@@ -159,3 +157,18 @@ Yet Another Resource Negotiator，是一种资源管理器。
 ### 分布式模式
 
         堕胎服务器组成分布式环境。
+
+# 特性
+
+## 多目录存储
+
+        Hadoop具有多目录存储的特性，以提升性能。当服务器具有多个磁盘时，可以通过配置`hdfs-site.xml`的`dfs.datanode.data.dir`参数来设置。其默认值为`file://${hadoop.tmp.dir}/dfs/data`，当要开启时需修改为：
+
+```xml
+        <property>
+             <name>dfs.datanode.data.dir</name>
+             <value>file:///dfs/data1,file:///hd2/dfs/data2,file:///hd3/dfs/data3</value>
+        </property>
+```
+
+## 集群数据均衡
