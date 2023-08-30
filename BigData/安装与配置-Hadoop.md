@@ -12,7 +12,7 @@
 
 # 配置
 
-[Hadoop完全分布式配置全过程②之Ubuntu18.04.4环境下配置xsync实现文件的集群分发_又是安静写bug的一天呢的博客-CSDN博客](https://blog.csdn.net/PxxxxN/article/details/113611226)
+[SSH免密登录 & 集群分发脚本](https://blog.csdn.net/PxxxxN/article/details/113611226)
 
 系统环境变量
 
@@ -31,7 +31,7 @@ export PATH=$PATH:$HADOOP_HOME/sbin
 Hadoop配置
 
 ```shell
-vim /hadoop/etc/hadoop-env.sh
+vim ./hadoop/etc/hadoop-env.sh
 
 # 添加java环境
 export JAVA_HOME=/opt/java-11.0.19
