@@ -172,3 +172,11 @@ def upload_file():
         f = request.files['the_file']
         f.save('/var/www/uploads/' + secure_filename(f.filename))
 ```
+
+# 蓝图
+
+        随着项目的复杂性增加，所有的视图函数放在一个文件中会很不利于管理，所以需要对程序进行模块化的处理。Flask内置了一个模块化处理的类——Blueprint(蓝图)
+
+        使用蓝图，可以很好的对系统进行模块化处理，无论是一体式应用，还是前后端分离。
+
+# 

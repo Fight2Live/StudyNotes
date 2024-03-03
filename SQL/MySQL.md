@@ -1,14 +1,181 @@
 # MySQL
 
+# 事务
+
+## 原子性
+
+        指要进行的行为要么全部成功，要么全部失败
+
+## 持久性
+
+        对数据库的操作一旦提交之后就是持久化的，即使服务崩溃也不会使这个操作的结果发生改变
+
+## 隔离性
+
+        追求多个事务之间互不影响
+
+### 隔离级别
+
+|                  | 脏读  | 不可重复读 | 幻读  |
+| ---------------- | --- | ----- | --- |
+| Read Uncommitted | √   | √     | √   |
+| Read Committed   | X   | √     | √   |
+| Repeatable Read  | X   | X     | √   |
+| Serializable     | X   | X     | X   |
+
+## 一致性
+
+        事务提交的前后，数据库的完整性约束不会被破坏，数据都是合法的
 
 
 
+# 索引
 
+        索引是对数据库表中一列或多列的值进行排序是登记机关，用于快速定位和访问表中的特定数据。
 
+## 类型
+
+### 物理结构区分
+
+- 聚簇索引：索引的键值的逻辑顺序，与表中相应行的物理顺序一致，且每张表只能有一个聚簇索引，即**主键索引**。
+
+- 非聚簇索引：逻辑顺序与数据行的物理顺序不一致。
+
+### 应用类型区分
+
+- 普通索引：MySQL的基本索引类型，没有什么限制，允许重复值与空值。通过`ALTER TABLE table_name ADD INDEX index_name(column)`创建
+
+- 唯一索引：索引列的值必须是唯一的，不可重复，但允许为空。`ALTER TABLE table_name ADD UNIQUE index_name(column)`
+
+- 主键索引：特殊的唯一索引，也是聚簇索引，不允许为空，并支持数据库自动赋值。
+
+- 组合索引：将表中的多个字段组成一个索引，查询时遵守最左前缀匹配规则。
+
+- 全文索引：只有在MyISAM引擎上使用，同时只支持CHAR、VARCHAR、TEXT类型上使用。
+
+- 前缀索引：将column的前n位数据来进行索引的建立
+
+## 优点
+
+- 可以大幅度提高查询速度，提高系统性能
+
+- 通过唯一索引，可以保证每一行数据的唯一性。
+
+- 可以加快join得到速度
+
+- 在使用分组和排序进行查询时，同样可以显著减少查询中分组和排序的时间
+
+- 通过使用索引，可以在查询过程
+
+## 缺点
+
+- 创建和维护索引所需的时间，随着数据量增加而增加，数据量越大时，其维护速度越低
+
+- 索引需要占用物理空间，存在一定的存储开销。
+
+## 设计原则
+
+        首先设置索引是为了更快速的查询数据，并且作为索引的字段能很大程度的区分不同的数据（比如id就一个id一条数据），所以可以有如下原则：
+
+- 首先考虑唯一性索引，因为是唯一的，可以更快速的通过该索引来确定某条记录
+
+- 为常作为查询条件的字段建立索引
+
+- 为经常需要排序、分组和联合操作的字段建立索引
+
+- 因为索引需要存储空间，同时也会影响维护数据的效率，所以要限制索引的数目
+
+- 小表（如百万以内）不建议索引
+
+- 对于值很长的字段，尽量使用前缀索引
+
+- 删除不再使用，或使用率很低的索引
+
+- 内容很少变化，但经常被查询的字段适合做索引；如果是相反的情况，就要考虑是否有必要创建索引
+
+## 索引结构
+
+        索引的数据结构和具体存储引擎有关，MySQL中常用的是**HASH**和**B+Tree**索引
+
+### Hash索引
+
+        他的底层就是Hash表，进行查询时调用Hash函数获取到相应的键值，然后徽标查询获得实际数据。
+
+1. hash进行等值查询更快，但无法进行范围查询。因为经过Hash函数建立索引之后，索引的顺序和原顺序无法保持一致，故不能支持范围查询，同理也不支持使用索引进行排序
+
+2. 不支持模糊查询以及多列索引的最左前缀匹配，因为Hash值不可预测，如AA和AB的Hash值没有任何相关性。
+
+3. Hash任何时候都避免不了回表查询数据
+
+4. 虽然在等值上查询效率高，但性能不稳定，当数据量很大时会产生Hash碰撞，此时查询效率反而可能降低。
+
+### B+ Tree
+
+        B+树索引底层的实现原理是多路平衡查找树，对于每一次的查询都是从根节点触发，查询到叶子节点方可以获得所查键值，最后查询判断是否需要回表查询。
+
+1. 因为他的本质是一颗查找树，自然支持范围查询和排序
+
+2. 在符合某些条件（聚簇索引、覆盖索引等）的时候，可以指通过索引完成查询，而不需要回表
+
+3. 查询效率比较稳定，因为每次查询都是从根节点到叶子节点。
+
+## 失效场景
+
+1. 不满足最左匹配原则
+
+2. 使用`select *`
+
+3. 索引列上有计算
+
+4. 索引列用了函数
+
+5. 条件值与字段值的类型不同
+
+6. `like`左边用了%
+
+7. 用两个列进行对比时，如`select name from user where id=height`
+
+8. 使用or时，它前面和后面的字段都需要加索引，否则会失效
+
+9. 使用`not exists`，或者普通索引使用`not in`时会失效
+
+10. `order by`时
+    
+    1. 没加`where`或`limit`
+    
+    2. 对多个索引进行`order by`
+    
+    3. 不满足最左匹配原则
+
+# 存储
+
+## 引擎
+
+[几种MySQL数据库引擎优缺点对比_mysql中各engine的优缺点-CSDN博客](https://blog.csdn.net/qq_21531681/article/details/108902419)
+
+        现在常见的MySQL存储引擎主要是`InnoDB`和`MyISAM`两种。
+
+        它们二者的主要区别：
+
+1. InnoDB支持事务，MyISAM不支持
+
+2. InnoDB支持外键，MyISAM不支持
+
+3. 它们都支持B+ Tree索引，但InnoDB是聚集索引，MyISAM是非聚集索引
+
+4. InnoDB不保存表中数据行数，而MyISAM用一个变量记录了整个表的行数。因为InnoDB的事务特性，在同一时刻表中的行数对于不同的事务而言是不一样的。
+
+5. InnoDB支持表、行级锁，而MyISAM支持表级锁
+
+6. InnoDB必须要唯一索引，如果没有就会自动寻找或产生一个隐藏列Row_id来充当默认逐渐，而MyISAM可以没有主键。
+
+## 结构
+
+1、
 
 # 存储过程
 
-​		即数据库的可编程函数。
+​        即数据库的可编程函数。
 
 ## 优缺点
 
@@ -19,8 +186,6 @@
 - 减少网络传输开销
 - 方便优化
 
-
-
 缺点：
 
 - 复杂业务处理的维护成本高
@@ -29,14 +194,13 @@
 
 ## 语法
 
-``` SQL
+```SQL
 DELIMITER //
 CREATE PROCEDURE myproc([OUT|IN|INOUT name type,])
-	begin
-	-- 函数体
-	end
+    begin
+    -- 函数体
+    end
 //
-		
 ```
 
 **局部变量**
@@ -47,19 +211,17 @@ CREATE PROCEDURE myproc([OUT|IN|INOUT name type,])
 
 create procedure t_1()
 begin
-	-- set 赋值
-	declare v1 varchar(32) default 'unkown';
-	set v1 = 'str';
-	select v1
-	-- into 赋值
-	declare t_name varchar(32) defaulut 'none';
-	declare t_age int default 0;
-	select name, age into t_name, t_age from user where id=1;
-	select t_name, t_age;
+    -- set 赋值
+    declare v1 varchar(32) default 'unkown';
+    set v1 = 'str';
+    select v1
+    -- into 赋值
+    declare t_name varchar(32) defaulut 'none';
+    declare t_age int default 0;
+    select name, age into t_name, t_age from user where id=1;
+    select t_name, t_age;
 end
 ```
-
-
 
 **用户变量**
 
@@ -67,8 +229,6 @@ end
 -- 自定义变量，在当前会话，连接中都有效
 -- @var_name
 ```
-
-
 
 会话变量 与 全局变量 是系统设定好的
 
@@ -78,36 +238,27 @@ end
 if
 ```
 
-
-
 ```sql
 case
 ```
-
-
-
-
 
 ### 循环
 
 ```sql
 -- loop死循环，需要使用leave退出循环，同样的可以用iterate来开始跳过下面的语句进入下一次循环
 [begin_label:] LOOP
-	if i >= 10;
-	then leave [begin_label];
-	end if;
-	
-	set i = i + 1
+    if i >= 10;
+    then leave [begin_label];
+    end if;
+
+    set i = i + 1
 end loop [begin_label];
 ```
-
-
 
 ```SQL
 -- repeat循环，直到statement为True时跳出
 [begin_label:] repeat
-	code;
+    code;
 until statement
 end repeat [begin_label]
 ```
-
